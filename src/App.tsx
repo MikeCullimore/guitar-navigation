@@ -1,7 +1,7 @@
 import './App.css';
 import GuitarFretboard, { Position } from './GuitarFretboard';
 
-// TODO: generate from simpler representation (CSV?).
+// TODO: generate from simpler representation.
 // TODO: pre-define cowboy chords, barre chords etc.
 // TODO: mappings will depend on guitar tuning.
 const positions: Position[] = [
