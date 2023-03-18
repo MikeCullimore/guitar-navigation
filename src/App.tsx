@@ -1,10 +1,10 @@
 import './App.css';
-import { openG } from './chords';
+import { G } from './chords';
 import GuitarFretboard from './GuitarFretboard';
 
 function App() {
   return (
-    <GuitarFretboard positions={openG}/>
+    <GuitarFretboard positions={G}/>
   );
 }
 
