@@ -1,17 +1,10 @@
 import './App.css';
-import GuitarFretboard, { Position } from './GuitarFretboard';
-
-// TODO: generate from simpler representation.
-// TODO: pre-define cowboy chords, barre chords etc.
-// TODO: mappings will depend on guitar tuning.
-const positions: Position[] = [
-  { string: 1, fret: 1},
-  { string: 2, fret: 3},
-];
+import { openG } from './chords';
+import GuitarFretboard from './GuitarFretboard';
 
 function App() {
   return (
-    <GuitarFretboard positions={positions}/>
+    <GuitarFretboard positions={openG}/>
   );
 }
 
