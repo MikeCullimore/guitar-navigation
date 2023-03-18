@@ -2,9 +2,9 @@
 // TODO: fit SVG to screen. (Why is vertical scrollbar shown? Because square?)
 // TODO: remove styling here (stroke: black), do via CSS.
 // TODO: ensure marker width is less than smallest fret spacing and smallest string spacing.
-// TODO: fretboard dots/markers.
 // TODO: thicker line for nut.
 // TODO: capture string identities (tuning) here?
+// TODO: draw SVG positioning calculations.
 // TODO: add padding.
 // TODO: string thicknesses.
 // TODO: calculate constants once.
@@ -12,7 +12,7 @@
 import { Position } from "./chords";
 
 const numStrings = 6;
-const numFrets = 20; // TODO: same # frets as my guitar.
+const numFrets = 22;
 const padding = 5;
 
 interface FretboardProps {
@@ -32,6 +32,10 @@ const getFretXPosition = (fret: number): number => {
     return c1*fret + c2*fret*fret;
 }
 
+const getFretMarkerXPosition = (fret: number): number => {
+    return (getFretXPosition(fret) + getFretXPosition(fret - 1))/2;
+}
+
 const getStringYPosition = (string: number): number => {
     const stringSpacing = getFretXPosition(numFrets) - getFretXPosition(numFrets - 1);
     return padding + stringSpacing*string;
@@ -44,6 +48,28 @@ const renderFrets = (numFrets: number): JSX.Element[] => {
         const x = getFretXPosition(index)
         return <line key={index} x1={x} y1={y1} x2={x} y2={y2} stroke="gray" strokeWidth={.4} strokeLinecap="round"/>;
     });
+}
+
+const renderFretMarkers = (): JSX.Element[] => {
+    // Frets with single dots.
+    const fill = "black";
+    const r = .5;
+    const y = (getStringYPosition(numStrings) + getStringYPosition(1))/2;
+    const markers = [3, 5, 7, 9, 15, 17, 19, 21].map((fret, index) => {
+        const x = getFretMarkerXPosition(fret);
+        return <circle key={index} cx={x} cy={y} r={r} fill={fill} />
+    });
+    const x12 = getFretMarkerXPosition(12);
+    // Double dots at 12th fret.
+    const a = .3;
+    const b = 1 - a;
+    const y1 = getStringYPosition(numStrings)*a + getStringYPosition(1)*b;
+    const y2 = getStringYPosition(numStrings)*b + getStringYPosition(1)*a;
+    return [
+        ...markers,
+        <circle cx={x12} cy={y1} r={r} fill={fill} />, 
+        <circle cx={x12} cy={y2} r={r} fill={fill} />
+    ];
 }
 
 const renderStrings = (numStrings: number): JSX.Element[] => {
@@ -70,6 +96,7 @@ const GuitarFretboard: React.FC<FretboardProps> = (props: FretboardProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
             {renderFrets(numFrets)}
+            {renderFretMarkers()}
             {renderStrings(numStrings)}
             {renderNotes(props.positions)}
         </svg>
