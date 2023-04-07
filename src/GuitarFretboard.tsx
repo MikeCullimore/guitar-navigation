@@ -1,5 +1,4 @@
 // TODO: what is state, what is props? # strings as prop, current notes as state?
-// TODO: fit SVG to screen. (Why is vertical scrollbar shown? Because square?)
 // TODO: remove styling here (stroke: black), do via CSS.
 // TODO: ensure marker width is less than smallest fret spacing and smallest string spacing.
 // TODO: thicker line for nut.
@@ -83,13 +82,17 @@ const renderStrings = (numStrings: number): JSX.Element[] => {
 }
 
 const renderNotes = (positions: Position[]): JSX.Element[] => {
-    // TODO: handle open strings (change string colour? Or hollow marker at fret 0?) 
     // TODO: handle strings not played (change string colour? Or X marker at fret 0?)
     return positions.map((position, index) => {
-        const r = .8; // TODO: calculate from smallest fret spacing.
+        const r = .6; // TODO: calculate from smallest fret spacing.
         const x = getFretXPosition(position.fret) - r;
         const y = getStringYPosition(position.string);
-        return <circle key={index} cx={x} cy={y} r={r} fill="blue" />
+        if (position.fret === 0) {
+            const strokeWidth = 0.1
+            return <circle key={index} cx={x-strokeWidth} cy={y} r={r} fill="none" stroke="blue" stroke-width={strokeWidth} />
+        } else {    
+            return <circle key={index} cx={x} cy={y} r={r} fill="blue" />
+        }
     });
 }
 
