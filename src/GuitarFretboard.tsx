@@ -4,7 +4,6 @@
 // TODO: thicker line for nut.
 // TODO: capture string identities (tuning) here?
 // TODO: draw SVG positioning calculations.
-// TODO: string thicknesses.
 // TODO: calculate constants once.
 
 import { Position } from "./chords";
@@ -16,6 +15,7 @@ const c2 = -0.13827529;
 const c1 = 7.52403813;
 const b = (100 - 2*padding)/100
 const strokeWidth = .3;
+const stringSizes = [.1, .15, .2, .25, .3, .35];
 
 interface FretboardProps {
     positions: Position[]
@@ -77,7 +77,7 @@ const renderStrings = (numStrings: number): JSX.Element[] => {
     const x2 = getFretXPosition(numFrets);
     return getArrayOfLength(numStrings).map((_, index) => {
         const y = getStringYPosition(index + 1);
-        return <line key={index} x1={x1} y1={y} x2={x2} y2={y} stroke="black" strokeWidth={strokeWidth} strokeLinecap="round"/>
+        return <line key={index} x1={x1} y1={y} x2={x2} y2={y} stroke="LightGray" strokeWidth={stringSizes[index]} strokeLinecap="round"/>
     });
 }
 
