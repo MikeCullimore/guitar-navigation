@@ -5,7 +5,6 @@
 // TODO: thicker line for nut.
 // TODO: capture string identities (tuning) here?
 // TODO: draw SVG positioning calculations.
-// TODO: add padding.
 // TODO: string thicknesses.
 // TODO: calculate constants once.
 
@@ -14,6 +13,10 @@ import { Position } from "./chords";
 const numStrings = 6;
 const numFrets = 22;
 const padding = 5;
+const c2 = -0.13827529;
+const c1 = 7.52403813;
+const b = (100 - 2*padding)/100
+const strokeWidth = .3;
 
 interface FretboardProps {
     positions: Position[]
@@ -26,10 +29,8 @@ const getArrayOfLength = (length: number): number[] => {
 
 const getFretXPosition = (fret: number): number => {
     // Based on measurements of a strat.
-    // TODO: include padding left and right.
-    const c2 = -0.13827529;
-    const c1 = 7.52403813;
-    return c1*fret + c2*fret*fret;
+    const withoutPadding = c1*fret + c2*fret*fret;
+    return padding + b*withoutPadding;
 }
 
 const getFretMarkerXPosition = (fret: number): number => {
@@ -46,7 +47,7 @@ const renderFrets = (numFrets: number): JSX.Element[] => {
     const y2 = getStringYPosition(numStrings);
     return getArrayOfLength(numFrets + 1).map((_, index) => {
         const x = getFretXPosition(index)
-        return <line key={index} x1={x} y1={y1} x2={x} y2={y2} stroke="gray" strokeWidth={.4} strokeLinecap="round"/>;
+        return <line key={index} x1={x} y1={y1} x2={x} y2={y2} stroke="gray" strokeWidth={strokeWidth} strokeLinecap="round"/>;
     });
 }
 
@@ -77,7 +78,7 @@ const renderStrings = (numStrings: number): JSX.Element[] => {
     const x2 = getFretXPosition(numFrets);
     return getArrayOfLength(numStrings).map((_, index) => {
         const y = getStringYPosition(index + 1);
-        return <line key={index} x1={x1} y1={y} x2={x2} y2={y} stroke="black" strokeWidth={.4} strokeLinecap="round"/>
+        return <line key={index} x1={x1} y1={y} x2={x2} y2={y} stroke="black" strokeWidth={strokeWidth} strokeLinecap="round"/>
     });
 }
 
@@ -85,7 +86,7 @@ const renderNotes = (positions: Position[]): JSX.Element[] => {
     // TODO: handle open strings (change string colour? Or hollow marker at fret 0?) 
     // TODO: handle strings not played (change string colour? Or X marker at fret 0?)
     return positions.map((position, index) => {
-        const r = 1;
+        const r = .8; // TODO: calculate from smallest fret spacing.
         const x = getFretXPosition(position.fret) - r;
         const y = getStringYPosition(position.string);
         return <circle key={index} cx={x} cy={y} r={r} fill="blue" />
