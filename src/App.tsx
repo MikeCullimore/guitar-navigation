@@ -1,10 +1,10 @@
 import './App.css';
-import { G } from './chords';
+import { G, chordToMarkers } from './chords';
 import GuitarFretboard from './GuitarFretboard';
 
 function App() {
   return (
-    <GuitarFretboard positions={G}/>
+    <GuitarFretboard markers={chordToMarkers(G)}/>
   );
 }
 

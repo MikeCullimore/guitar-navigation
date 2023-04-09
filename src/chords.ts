@@ -1,26 +1,26 @@
 // TODO: fingering suggestions?
-// TODO: pre-define cowboy chords, barre chords etc. (As string/fret tuples.)
-// TODO: function to get note names from string/fret given guitar tuning. Wrapper/decorator?
+// TODO: function to get note names from string/fret given guitar tuning.
+// TODO: need richer type for barre chords?
 
-export interface Position {
-    string: number; // TODO: if string not present, interpret as not played.
-    fret: number; // TODO: interpret 0 as open string?
+import { NoteMarker } from "./GuitarFretboard";
+
+type Fret = number | null;
+type Chord = Fret[];
+
+export const C: Chord = [null, 3, 2, 0, 1, 0];
+export const G: Chord = [3, 2, 0, 0, 0, 3];
+
+export const chordToMarkers = (chord: Chord): NoteMarker[] => {
+    return chord.flatMap((fret: Fret, index) => {
+        if (fret !== null) {
+            return {
+                string: index + 1,
+                fret,
+                fillColour: "blue",
+                radius: .6,
+            } as NoteMarker;
+        } else {
+            return [];
+        }
+    });
 }
-
-export const C: Position[] = [
-    // Low E string is not played.
-    { string: 2, fret: 3},
-    { string: 3, fret: 2},
-    { string: 4, fret: 0}, // Play open G string.
-    { string: 5, fret: 1},
-    { string: 6, fret: 0},
-];
-
-export const G: Position[] = [
-    { string: 1, fret: 3},
-    { string: 2, fret: 2},
-    { string: 3, fret: 0},
-    { string: 4, fret: 0},
-    { string: 5, fret: 0},
-    { string: 6, fret: 3},
-];

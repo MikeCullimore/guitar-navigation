@@ -2,11 +2,8 @@
 // TODO: remove styling here (stroke: black), do via CSS.
 // TODO: ensure marker width is less than smallest fret spacing and smallest string spacing.
 // TODO: thicker line for nut.
-// TODO: capture string identities (tuning) here?
 // TODO: draw SVG positioning calculations.
 // TODO: calculate constants once.
-
-import { Position } from "./chords";
 
 const numStrings = 6;
 const numFrets = 22;
@@ -17,8 +14,20 @@ const b = (100 - 2*padding)/100
 const strokeWidth = .3;
 const stringSizes = [.1, .15, .2, .25, .3, .35];
 
-interface FretboardProps {
-    positions: Position[]
+// TODO: is this a component, not an interface?
+export interface NoteMarker {
+    string: number; // TODO: function in root component to translate into x, y.
+    fret: number;
+    fillColour: string;
+    radius?: number; // TODO: how to get in same units as x, y?
+    label?: string;
+    strokeColour?: string;
+    transparency?: number;
+}
+
+export interface FrameData {
+    // milliseconds: number; // TODO: this prop in higher-level component?
+    markers: NoteMarker[];
 }
 
 const getArrayOfLength = (length: number): number[] => {
@@ -28,6 +37,7 @@ const getArrayOfLength = (length: number): number[] => {
 
 const getFretXPosition = (fret: number): number => {
     // Based on measurements of a strat.
+    // TODO: simplify e.g. x = fret^a?
     const withoutPadding = c1*fret + c2*fret*fret;
     return padding + b*withoutPadding;
 }
@@ -50,7 +60,7 @@ const renderFrets = (numFrets: number): JSX.Element[] => {
     });
 }
 
-const renderFretMarkers = (): JSX.Element[] => {
+const renderInlays = (): JSX.Element[] => {
     // Frets with single dots.
     const fill = "black";
     const r = .5;
@@ -81,13 +91,14 @@ const renderStrings = (numStrings: number): JSX.Element[] => {
     });
 }
 
-const renderNotes = (positions: Position[]): JSX.Element[] => {
+const renderNotes = (markers: NoteMarker[]): JSX.Element[] => {
     // TODO: handle strings not played (change string colour? Or X marker at fret 0?)
-    return positions.map((position, index) => {
-        const r = .6; // TODO: calculate from smallest fret spacing.
-        const x = getFretXPosition(position.fret) - r;
-        const y = getStringYPosition(position.string);
-        if (position.fret === 0) {
+    return markers.map((marker, index) => {
+        const r = .6; // TODO: calculate marker radius from smallest fret spacing.
+        // const r = getFretXPosition(numFrets) - getFretXPosition(numFrets - 1);
+        const x = getFretXPosition(marker.fret) - r;
+        const y = getStringYPosition(marker.string);
+        if (marker.fret === 0) {
             const strokeWidth = 0.1
             return <circle key={index} cx={x-strokeWidth} cy={y} r={r} fill="none" stroke="blue" stroke-width={strokeWidth} />
         } else {    
@@ -96,13 +107,13 @@ const renderNotes = (positions: Position[]): JSX.Element[] => {
     });
 }
 
-const GuitarFretboard: React.FC<FretboardProps> = (props: FretboardProps) => {
+const GuitarFretboard: React.FC<FrameData> = (props: FrameData) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
             {renderFrets(numFrets)}
-            {renderFretMarkers()}
+            {renderInlays()}
             {renderStrings(numStrings)}
-            {renderNotes(props.positions)}
+            {renderNotes(props.markers)}
         </svg>
     );
 }
