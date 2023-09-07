@@ -1,9 +1,11 @@
 // TODO: what is state, what is props? # strings as prop, current notes as state?
 // TODO: remove styling here (stroke: black), do via CSS.
+// TODO: prevent vertical scrollbar appearing.
 // TODO: ensure marker width is less than smallest fret spacing and smallest string spacing.
-// TODO: thicker line for nut.
-// TODO: draw SVG positioning calculations.
+// TODO: adapt SVG positioning calculations from guitar-technique repo.
 // TODO: calculate constants once.
+// TODO: make markers square not circles to better fit text.
+// TODO: use tooltips to provide extra information on hover?
 
 const numStrings = 6;
 const numFrets = 22;
@@ -12,9 +14,9 @@ const c2 = -0.13827529;
 const c1 = 7.52403813;
 const b = (100 - 2*padding)/100
 const strokeWidth = .3;
-const stringSizes = [.1, .15, .2, .25, .3, .35];
+const stringSizes = [.35, .3, .25, .2, .15, .1]; // TODO: adapt for bass etc. (just define min and max then interpolate).
 
-// TODO: is this a component, not an interface?
+// TODO: is this a component, not an interface? Move over to NoteMarker.tsx.
 export interface NoteMarker {
     string: number; // TODO: function in root component to translate into x, y.
     fret: number;
@@ -22,7 +24,7 @@ export interface NoteMarker {
     radius?: number; // TODO: how to get in same units as x, y?
     label?: string;
     strokeColour?: string;
-    transparency?: number;
+    opacity?: number;
 }
 
 export interface FrameData {
@@ -37,9 +39,9 @@ const getArrayOfLength = (length: number): number[] => {
 
 const getFretXPosition = (fret: number): number => {
     // Based on measurements of a strat.
-    // TODO: simplify e.g. x = fret^a?
-    const withoutPadding = c1*fret + c2*fret*fret;
-    return padding + b*withoutPadding;
+    // TODO: equal fret spacing as option.
+    // TODO: adapt to varying numbers of frets.
+    return padding + b*(c1*fret + c2*fret*fret);
 }
 
 const getFretMarkerXPosition = (fret: number): number => {
@@ -48,7 +50,7 @@ const getFretMarkerXPosition = (fret: number): number => {
 
 const getStringYPosition = (string: number): number => {
     const stringSpacing = getFretXPosition(numFrets) - getFretXPosition(numFrets - 1);
-    return padding + stringSpacing*string;
+    return padding + stringSpacing*(numStrings - string + 1);
 }
 
 const renderFrets = (numFrets: number): JSX.Element[] => {
@@ -107,9 +109,10 @@ const renderNotes = (markers: NoteMarker[]): JSX.Element[] => {
     });
 }
 
+// TODO: FrameData is state, props are number fof strings and frets?
 const GuitarFretboard: React.FC<FrameData> = (props: FrameData) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             {renderFrets(numFrets)}
             {renderInlays()}
             {renderStrings(numStrings)}
