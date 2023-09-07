@@ -1,12 +1,12 @@
 import './App.css';
-import { chordLibrary, fretsToMarkers } from './chords';
-import GuitarFretboard from './GuitarFretboard';
+import { chordLibraryGuitar, fretsToMarkers } from './chords';
+import Fretboard from './Fretboard';
 // import StateTransitionComponent from './StateTransitionComponent';
 
 // TODO: show chord name (if rendering a chord).
 function App() {
   return (
-    <GuitarFretboard markers={fretsToMarkers(chordLibrary.get('F#'))}/>
+    <Fretboard numStrings={6} numFrets={22} markers={fretsToMarkers(chordLibraryGuitar.get('F#'))}/>
     // <StateTransitionComponent/>
   );
 }

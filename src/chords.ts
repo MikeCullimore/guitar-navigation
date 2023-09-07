@@ -2,14 +2,9 @@
 // TODO: function to get note names from string/fret given guitar tuning.
 // TODO: need richer type for barre chords?
 
-import { NoteMarker } from "./GuitarFretboard";
+import { NoteMarker } from "./Fretboard";
 
 type Fret = number | null;
-// TODO: no longer need this?
-type Chord = {
-    name: string;
-    frets: Fret[];
-};
 
 // TODO: add note name, scale degree.
 export const fretsToMarkers = (frets: Fret[] | undefined): NoteMarker[] => {
@@ -35,7 +30,8 @@ const parseChordString = (chordString: string): Fret[] => {
 }
 
 // TODO: array of voicings for given chord name.
-export const chordLibrary = new Map<string, Fret[]>([
+// TODO: equivalent chord library for piano.
+export const chordLibraryGuitar = new Map<string, Fret[]>([
     ['E6', parseChordString("xxx999")],
     ['F', parseChordString("xxx997")],
     ['Badd9', parseChordString("xxx879")],

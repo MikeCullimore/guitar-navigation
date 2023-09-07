@@ -1,16 +1,17 @@
-// TODO: refactor as components? (Frets, inlays, strings, notes.)
-// TODO: what is state, what is props? # strings as prop, current notes as state?
+// TODO: adapt SVG positioning calculations from guitar-technique repo.
+// TODO: calculate constants once.
 // TODO: remove styling here (stroke: black), do via CSS.
 // TODO: prevent vertical scrollbar appearing.
 // TODO: ensure marker width is less than smallest fret spacing and smallest string spacing.
-// TODO: adapt SVG positioning calculations from guitar-technique repo.
-// TODO: calculate constants once.
 // TODO: make markers square not circles to better fit text.
 // TODO: use tooltips to provide extra information on hover?
 
+// TODO: remove these global variables (pass down from fretboard props).
 const numStrings = 6;
 const numFrets = 22;
-const stringSizes = [.35, .3, .25, .2, .15, .1]; // TODO: adapt for bass etc. (just define min and max then interpolate).
+
+// TODO: adapt for bass etc. (just define min and max then interpolate).
+const stringSizes = [.35, .3, .25, .2, .15, .1];
 
 const padding = 5;
 const c2 = -0.13827529;
@@ -29,9 +30,10 @@ export interface NoteMarker {
     opacity?: number;
 }
 
-export interface FrameData {
-    // milliseconds: number; // TODO: this prop in higher-level component?
-    markers: NoteMarker[];
+export interface FretboardProps {
+    numStrings: number;
+    numFrets: number;
+    markers: NoteMarker[]; // TODO: replace with frame data (markers as function of time).
 }
 
 const getArrayOfLength = (length: number): number[] => {
@@ -43,6 +45,7 @@ const getFretXPosition = (fret: number): number => {
     // Based on measurements of a strat.
     // TODO: equal fret spacing as option.
     // TODO: adapt to varying numbers of frets.
+    // TODO: ensure endpoints are exactly 0, 100.
     return padding + b*(c1*fret + c2*fret*fret);
 }
 
@@ -50,12 +53,13 @@ const getFretMarkerXPosition = (fret: number): number => {
     return (getFretXPosition(fret) + getFretXPosition(fret - 1))/2;
 }
 
+// TODO: refactor this to pass in numStrings, numFrets once, return function (string) -> y?
 const getStringYPosition = (string: number): number => {
     const stringSpacing = getFretXPosition(numFrets) - getFretXPosition(numFrets - 1);
     return padding + stringSpacing*(numStrings - string + 1);
 }
 
-const renderFrets = (numFrets: number): JSX.Element[] => {
+const Frets = (numFrets: number): JSX.Element[] => {
     const y1 = getStringYPosition(1);
     const y2 = getStringYPosition(numStrings);
     return getArrayOfLength(numFrets + 1).map((_, index) => {
@@ -64,7 +68,7 @@ const renderFrets = (numFrets: number): JSX.Element[] => {
     });
 }
 
-const renderInlays = (): JSX.Element[] => {
+const Inlays = (): JSX.Element[] => {
     // Frets with single dots.
     const fill = "black";
     const r = .5;
@@ -86,7 +90,7 @@ const renderInlays = (): JSX.Element[] => {
     ];
 }
 
-const renderStrings = (numStrings: number): JSX.Element[] => {
+const Strings = (numStrings: number): JSX.Element[] => {
     const x1 = getFretXPosition(0);
     const x2 = getFretXPosition(numFrets);
     return getArrayOfLength(numStrings).map((_, index) => {
@@ -95,7 +99,7 @@ const renderStrings = (numStrings: number): JSX.Element[] => {
     });
 }
 
-const renderNotes = (markers: NoteMarker[]): JSX.Element[] => {
+const Notes = (markers: NoteMarker[]): JSX.Element[] => {
     // TODO: handle strings not played (change string colour? Or X marker at fret 0?)
     return markers.map((marker, index) => {
         const r = .6; // TODO: calculate marker radius from smallest fret spacing.
@@ -111,16 +115,15 @@ const renderNotes = (markers: NoteMarker[]): JSX.Element[] => {
     });
 }
 
-// TODO: FrameData is state, props are number of strings and frets?
-const GuitarFretboard: React.FC<FrameData> = (props: FrameData) => {
+const Fretboard: React.FC<FretboardProps> = (props: FretboardProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            {renderFrets(numFrets)}
-            {renderInlays()}
-            {renderStrings(numStrings)}
-            {renderNotes(props.markers)}
+            {Frets(props.numFrets)}
+            {Inlays()}
+            {Strings(props.numStrings)}
+            {Notes(props.markers)}
         </svg>
     );
 }
 
-export default GuitarFretboard;
+export default Fretboard;
