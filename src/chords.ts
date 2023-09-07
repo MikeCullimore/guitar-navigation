@@ -38,6 +38,8 @@ const parseChordString = (chordName: string, chordString: string): Chord => {
     return chord;
 }
 
+// You Only Live Once: The Strokes
+// TODO: add chorus chords from notebook when syntax finalised.
 export const E6 = parseChordString("E6", "xxx999");
 export const F = parseChordString("F", "xxx997");
 export const Badd9 = parseChordString("Badd9", "xxx879");
