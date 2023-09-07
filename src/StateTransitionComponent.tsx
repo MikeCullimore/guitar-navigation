@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-type FrameId = number | null;
+type FrameRef = number | null;
 
+// TODO: combine with GuitarFretboard to animate sequence of notes/chords!
 const StateTransitionComponent = () => {
-  const states = ['State 1', 'State 2', 'State 3'];
+  const states = ['E6', 'F', 'Badd9', 'F#'];
   const [currentStateIndex, setCurrentStateIndex] = useState(0);
 
-  const animationFrameIdRef = useRef<FrameId>(null);
-  const startTimeRef = useRef<FrameId>(null);
+  const animationFrameIdRef = useRef<FrameRef>(null);
+  const startTimeRef = useRef<FrameRef>(null);
 
   const scheduleTransition = () => {
     const nextStateIndex = (currentStateIndex + 1) % states.length;

@@ -16,6 +16,7 @@ npm start
     * Frame can be chord or individual note.
     * Start with fixed time interval between frames.
     * Then change to say milliseconds elapsed.
+    * Combine StateTransitionComponent with GuitarFretboard.
 * Make a standalone script to prototype and debug changes.
 * Use [tonal](https://www.npmjs.com/package/tonal) for music theory?
 * Static render of all notes on neck with names as labels.

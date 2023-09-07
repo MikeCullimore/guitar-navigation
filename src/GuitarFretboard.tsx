@@ -1,3 +1,4 @@
+// TODO: refactor as components? (Frets, inlays, strings, notes.)
 // TODO: what is state, what is props? # strings as prop, current notes as state?
 // TODO: remove styling here (stroke: black), do via CSS.
 // TODO: prevent vertical scrollbar appearing.
@@ -9,12 +10,13 @@
 
 const numStrings = 6;
 const numFrets = 22;
+const stringSizes = [.35, .3, .25, .2, .15, .1]; // TODO: adapt for bass etc. (just define min and max then interpolate).
+
 const padding = 5;
 const c2 = -0.13827529;
 const c1 = 7.52403813;
 const b = (100 - 2*padding)/100
 const strokeWidth = .3;
-const stringSizes = [.35, .3, .25, .2, .15, .1]; // TODO: adapt for bass etc. (just define min and max then interpolate).
 
 // TODO: is this a component, not an interface? Move over to NoteMarker.tsx.
 export interface NoteMarker {
@@ -109,7 +111,7 @@ const renderNotes = (markers: NoteMarker[]): JSX.Element[] => {
     });
 }
 
-// TODO: FrameData is state, props are number fof strings and frets?
+// TODO: FrameData is state, props are number of strings and frets?
 const GuitarFretboard: React.FC<FrameData> = (props: FrameData) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
