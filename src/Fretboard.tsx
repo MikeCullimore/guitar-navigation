@@ -41,10 +41,13 @@ export interface NoteMarker {
     opacity?: number;
 }
 
-export interface FretboardProps {
+export interface Markers {
+    markers: NoteMarker[]; // TODO: replace with frame data (markers as function of time).
+}
+
+export interface FretboardProps extends Markers {
     numStrings: number;
     numFrets: number;
-    markers: NoteMarker[]; // TODO: replace with frame data (markers as function of time).
 }
 
 const getArrayOfLength = (length: number): number[] => {
@@ -111,7 +114,6 @@ const Strings = (numStrings: number): JSX.Element[] => {
 }
 
 const Notes = (markers: NoteMarker[]): JSX.Element[] => {
-    // TODO: handle strings not played (change string colour? Or X marker at fret 0?)
     return markers.map((marker, index) => {
         const r = .6; // TODO: calculate marker radius from smallest fret spacing.
         // const r = getFretXPosition(numFrets) - getFretXPosition(numFrets - 1);
@@ -128,6 +130,7 @@ const Notes = (markers: NoteMarker[]): JSX.Element[] => {
 
 const Fretboard: React.FC<FretboardProps> = (props: FretboardProps) => {
     return (
+        // TODO: prevent the vertical scrollbar from showing.
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             {Frets(props.numFrets)}
             {Inlays()}
