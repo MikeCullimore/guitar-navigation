@@ -33,6 +33,7 @@ const parseChordString = (chordString: string): Fret[] => {
     });
 }
 
+// TODO: change key to enum for typing?
 // TODO: array of voicings for given chord name.
 // TODO: equivalent chord library for piano.
 export const chordLibraryGuitar = new Map<string, Fret[]>([

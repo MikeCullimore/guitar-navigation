@@ -12,14 +12,12 @@ npm start
 
 ## TODO
 
-* Animate sequence of frames.
+* Animate sequence of frames: see GuitarFretboardAnimation.tsx
     * Frame can be chord or individual note.
     * Start with fixed time interval between frames.
     * Then change to say milliseconds elapsed.
-    * Combine StateTransitionComponent with GuitarFretboard.
     * ASCII tab as alternative input format.
     * Use [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
-    * Prototype with `setInterval` and accept inaccurate timing?
     * Adapt from [Fender Play blog post](https://medium.com/fender-engineering/near-realtime-animations-with-synchronized-audio-in-javascript-6d845afcf1c5)
 * Make a standalone script to prototype and debug changes.
 * Separate components for marker, fretboard (separate board, frets, strings, inlays) and container (has xy lookups).

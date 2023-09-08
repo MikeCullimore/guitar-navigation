@@ -1,9 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { chordLibraryGuitar, fretsToMarkers } from './chords';
+import GuitarFretboard from './GuitarFretboard';
 
 type FrameRef = number | null;
 
-const StateTransitionComponent = () => {
-  const states = ['E6', 'F', 'Badd9', 'F#'];
+interface GuitarFretboardAnimationProps {
+    chords: string[];
+}
+
+// TODO: show chord name as well.
+// TODO: parse chord names to note markers in advance, pass as props.
+// TODO: support variable time interval between chord changes.
+const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props: GuitarFretboardAnimationProps) => {
+  const states = props.chords;
   const [currentStateIndex, setCurrentStateIndex] = useState(0);
 
   const animationFrameIdRef = useRef<FrameRef>(null);
@@ -18,6 +27,7 @@ const StateTransitionComponent = () => {
       }
       const elapsedTime = timestamp - startTimeRef.current!;
 
+      // TODO: interval as prop also.
       if (elapsedTime >= 2000) {
         setCurrentStateIndex(nextStateIndex);
         startTimeRef.current = null;
@@ -40,13 +50,10 @@ const StateTransitionComponent = () => {
     };
   }, [currentStateIndex]);
 
-  const currentState = states[currentStateIndex];
+  const currentChordName = states[currentStateIndex];
+  const markers = fretsToMarkers(chordLibraryGuitar.get(currentChordName))
 
-  return (
-    <div>
-      <h1>{currentState}</h1>
-    </div>
-  );
-};
+  return <GuitarFretboard markers={markers}/>;
+}
 
-export default StateTransitionComponent;
+export default GuitarFretboardAnimation;
