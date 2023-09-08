@@ -19,6 +19,11 @@ npm start
     * ASCII tab as alternative input format.
     * Use [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
     * Adapt from [Fender Play blog post](https://medium.com/fender-engineering/near-realtime-animations-with-synchronized-audio-in-javascript-6d845afcf1c5)
+    * Engine to convert simple inputs to more fully-featured animations e.g.:
+        * Could show next chord ahead of time in grey.
+        * For scales, arpeggios could show all notes in advance and highlight current one.
+        * Input BPM, convert to milliseconds interval. (Test how reliable timing is as function of interval.)
+        * How to parse rhythms? What formats out there?
 * Make a standalone script to prototype and debug changes.
 * Separate components for marker, fretboard (separate board, frets, strings, inlays) and container (has xy lookups).
 * Static render of all notes on neck with names as labels.

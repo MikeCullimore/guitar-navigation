@@ -1,7 +1,11 @@
+// TODO: prevent the vertical scrollbar from showing. Steps:
+// Put Fretboard component in a div, full width of screen.
+// Change positions to % (of container). Try with keyboard then apply here.
+// CSS changes: see App.css
+// Remove viewPort prop in SVG below.
 // TODO: adapt SVG positioning calculations from guitar-technique repo.
 // TODO: calculate constants once.
-// TODO: remove styling here (stroke: black), do via CSS.
-// TODO: prevent vertical scrollbar appearing.
+// TODO: no inline styles, compare Keyboard component.
 // TODO: ensure marker width is less than smallest fret spacing and smallest string spacing.
 // TODO: make markers square not circles to better fit text.
 // TODO: use tooltips to provide extra information on hover?
@@ -130,7 +134,6 @@ const Notes = (markers: NoteMarker[]): JSX.Element[] => {
 
 const Fretboard: React.FC<FretboardProps> = (props: FretboardProps) => {
     return (
-        // TODO: prevent the vertical scrollbar from showing.
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
             {Frets(props.numFrets)}
             {Inlays()}
