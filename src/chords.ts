@@ -1,6 +1,6 @@
 // TODO: fingering suggestions?
 // TODO: function to get note names from string/fret given guitar tuning.
-// TODO: need richer type for barre chords?
+// TODO: need richer type for barre chords? Or use hyphens?
 
 import { NoteMarker } from "./Fretboard";
 
@@ -23,7 +23,11 @@ export const fretsToMarkers = (frets: Fret[] | undefined): NoteMarker[] => {
     });
 }
 
+const numStrings = 6; // TODO: pass as arg.
 const parseChordString = (chordString: string): Fret[] => {
+    if (chordString.length !== numStrings) {
+        throw new Error(`Invalid chord string ${chordString}, expected ${numStrings} characters.`);
+    }
     return Array.from(chordString).map(char => {
         return char === "x" ? null : Number(char)
     });
