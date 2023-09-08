@@ -10,8 +10,19 @@
 const numStrings = 6;
 const numFrets = 22;
 
-// TODO: adapt for bass etc. (just define min and max then interpolate).
-const stringSizes = [.35, .3, .25, .2, .15, .1];
+const getStringThicknesses = (numStrings: number, minThickness = .1, maxThickness = .35): number[] => {
+    const step = 1 / (numStrings - 1);
+    const stringThicknesses = [];
+    
+    for (let string = 0; string < numStrings; string++) {
+        const t = string * step;
+        stringThicknesses.push(maxThickness + (minThickness - maxThickness) * t);
+    }
+    
+    return stringThicknesses;
+}
+
+const stringSizes = getStringThicknesses(numStrings);
 
 const padding = 5;
 const c2 = -0.13827529;
