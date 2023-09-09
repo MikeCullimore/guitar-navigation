@@ -51,17 +51,18 @@ interface Point {
 const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) => JSX.Element) => {
     // Abbreviate.
     const wkw = keyboardProps.whiteKeyWidth;
+    const wkh = 100; // %
     const bkw = keyboardProps.blackKeyWidth;
     const bkh = keyboardProps.blackKeyHeight;
     const offA = keyboardProps.offsetA;
     const offB = keyboardProps.offsetB;
 
     // TODO: remove.
-    console.log(`wkw ${wkw}`);
-    console.log(`2 ${bkw}`);
-    console.log(`3 ${bkh}`);
-    console.log(`4 ${offA}`);
-    console.log(`5 ${offB}`);
+    // console.log(`wkw ${wkw}`);
+    // console.log(`2 ${bkw}`);
+    // console.log(`3 ${bkh}`);
+    // console.log(`4 ${offA}`);
+    // console.log(`5 ${offB}`);
 
     const u1 = 0;
     const u3 = wkw;
@@ -88,8 +89,8 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
             { x: u2, y: 0 },
             { x: u2, y: bkh },
             { x: u3, y: bkh },
-            { x: u3, y: 100 },
-            { x: u1, y: 100 },
+            { x: u3, y: wkh },
+            { x: u1, y: wkh },
             { x: u1, y: 0 }
         ],
         [Chroma.CSharp]: [
@@ -104,8 +105,8 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
             { x: u5, y: 0 },
             { x: u5, y: bkh },
             { x: u6, y: bkh },
-            { x: u6, y: 1 },
-            { x: u3, y: 1 },
+            { x: u6, y: wkh },
+            { x: u3, y: wkh },
             { x: u3, y: bkh },
             { x: u4, y: bkh },
             { x: u4, y: 0 }
@@ -120,8 +121,8 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
         [Chroma.E]: [
             { x: u7, y: 0 },
             { x: u8, y: 0 },
-            { x: u8, y: 1 },
-            { x: u6, y: 1 },
+            { x: u8, y: wkh },
+            { x: u6, y: wkh },
             { x: u6, y: bkh },
             { x: u7, y: bkh },
             { x: u7, y: 0 }
@@ -131,8 +132,8 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
             { x: u9, y: 0 },
             { x: u9, y: bkh },
             { x: u10, y: bkh },
-            { x: u10, y: 1 },
-            { x: u8, y: 1 },
+            { x: u10, y: wkh },
+            { x: u8, y: wkh },
             { x: u8, y: 0 }
         ],
         [Chroma.FSharp]: [
@@ -147,8 +148,8 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
             { x: u12, y: 0 },
             { x: u12, y: bkh },
             { x: u13, y: bkh },
-            { x: u13, y: 1 },
-            { x: u10, y: 1 },
+            { x: u13, y: wkh },
+            { x: u10, y: wkh },
             { x: u10, y: bkh },
             { x: u11, y: bkh },
             { x: u11, y: 0 }
@@ -165,8 +166,8 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
             { x: u15, y: 0 },
             { x: u15, y: bkh },
             { x: u16, y: bkh },
-            { x: u16, y: 1 },
-            { x: u13, y: 1 },
+            { x: u16, y: wkh },
+            { x: u13, y: wkh },
             { x: u13, y: bkh },
             { x: u14, y: bkh },
             { x: u14, y: 0 }
@@ -181,8 +182,8 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
         [Chroma.B]: [
             { x: u17, y: 0 },
             { x: u18, y: 0 },
-            { x: u18, y: 1 },
-            { x: u16, y: 1 },
+            { x: u18, y: wkh },
+            { x: u16, y: wkh },
             { x: u16, y: bkh },
             { x: u17, y: bkh },
             { x: u17, y: 0 }
@@ -210,10 +211,7 @@ const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) =
 const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
     const getPolygonForNote = getNotePolygonLookup(props);
     // TODO: replace with range of notes (not chromas) from props numOctaves.
-    // TODO: how to make this work? Error: Type '(string | Chroma)[]' is not assignable to type 'Chroma[]'.
-    // const chromas: Chroma[] = Object.values(Chroma);
-    // TODO: fix broken lookups A, B, D, E, F, G. All the white keys except C! Need to reverse order? No.
-    const chromas = [Chroma.B];
+    const chromas = [Chroma.G];
     return (
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
