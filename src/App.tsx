@@ -5,7 +5,7 @@ import './App.css';
 // import Fretboard from './Fretboard';
 // import GuitarFretboard from './GuitarFretboard';
 // import GuitarFretboardAnimation from './GuitarFretboardAnimation';
-import Keyboard from './Keyboard';
+import Keyboard, { getKeyboardProps } from './Keyboard';
 // import StateTransitionComponent from './StateTransitionComponent';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
     // <GuitarFretboard markers={fretsToMarkers(chordLibraryGuitar.get('Badd9'))}/>
     // <StateTransitionComponent/>
     // <GuitarFretboardAnimation chords={['E6', 'F', 'Badd9', 'F#']}/>
-    <Keyboard numOctaves={1}/>
+    <Keyboard {...getKeyboardProps(1)}/>
   );
 }
 
