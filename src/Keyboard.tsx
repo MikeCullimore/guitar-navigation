@@ -1,32 +1,9 @@
-// TODO: conversion to multiple octaves.
 // TODO: allow any first and last key, not just whole octaves.
 
-import { Chroma } from "./chroma";
+import { ALL_CHROMAS, Chroma, isBlackKey } from "./chroma";
 
 export interface KeyboardProps {
     numOctaves: number;
-    whiteKeyWidth: number;
-    blackKeyWidth: number;
-    blackKeyHeight: number;
-    offsetA: number;
-    offsetB: number;
-}
-
-export const getKeyboardProps = (numOctaves: number): KeyboardProps => {
-    // There are 7 white keys per octave.
-    const whiteKeyWidth = 100 / (7 * numOctaves);
-
-    const goldenRatio = 2 / (1 + Math.sqrt(5));
-    const blackKeyWidth = goldenRatio * whiteKeyWidth;
-
-    return {
-        numOctaves,
-        whiteKeyWidth,
-        blackKeyWidth,
-        blackKeyHeight: 100 * goldenRatio,
-        offsetA: blackKeyWidth / 6,
-        offsetB: blackKeyWidth / 4
-    }
 }
 
 // TODO: move to another file (but which?). Not keyboard specific.
@@ -35,187 +12,85 @@ export interface Note {
     octave: number;
 }
 
-export interface KeyStyling {
-    fillColour: string;
-    strokeColour: string;
+interface KeyBaseProps {
+    width: number;
+    height: number;
+    fill: string; // TODO: remove (just for debugging).
 }
 
-interface Point {
-    x: number;
-    y: number;
+// TODO: another interface for styling, extend that too?
+export interface KeyProps extends KeyBaseProps {
+    note: Note;
 }
 
-// TODO: revert to white key vertices being rectangles, just ensure black keys drawn on top? Use isBlackKey, isWhiteKey.
-// TODO: define units as percentage of container.
-// TODO: type function signature once?
-const getNotePolygonLookup = (keyboardProps: KeyboardProps): ((chroma: Chroma) => JSX.Element) => {
-    // Abbreviate.
-    const wkw = keyboardProps.whiteKeyWidth;
-    const wkh = 100; // %
-    const bkw = keyboardProps.blackKeyWidth;
-    const bkh = keyboardProps.blackKeyHeight;
-    const offA = keyboardProps.offsetA;
-    const offB = keyboardProps.offsetB;
-
-    // TODO: remove.
-    // console.log(`wkw ${wkw}`);
-    // console.log(`2 ${bkw}`);
-    // console.log(`3 ${bkh}`);
-    // console.log(`4 ${offA}`);
-    // console.log(`5 ${offB}`);
-
-    const u1 = 0;
-    const u3 = wkw;
-    const u2 = u3 - bkw/2 - offA;
-    const u4 = u2 + bkw;
-    const u6 = 2*wkw;
-    const u5 = u6 - bkw/2 + offA;
-    const u7 = u5 + bkw;
-    const u8 = 3*wkw;
-    const u10 = 4*wkw;
-    const u9 = u10 - bkw/2 - offB;
-    const u11 = u9 + bkw;
-    const u13 = 5*wkw;
-    const u12 = u13 - bkw/2
-    const u14 = u12 + bkw;
-    const u16 = 6*wkw;
-    const u15 = u16 - bkw/2 + offB;
-    const u17 = u15 + bkw;
-    const u18 = 100; // = 7*wkw
-
-    const keyVerticesLookup: Record<Chroma, Point[]> = {
-        [Chroma.C]: [
-            { x: u1, y: 0 },
-            { x: u2, y: 0 },
-            { x: u2, y: bkh },
-            { x: u3, y: bkh },
-            { x: u3, y: wkh },
-            { x: u1, y: wkh },
-            { x: u1, y: 0 }
-        ],
-        [Chroma.CSharp]: [
-            { x: u2, y: 0 },
-            { x: u4, y: 0 },
-            { x: u4, y: bkh },
-            { x: u2, y: bkh },
-            { x: u2, y: 0 }
-        ],
-        [Chroma.D]: [
-            { x: u4, y: 0 },
-            { x: u5, y: 0 },
-            { x: u5, y: bkh },
-            { x: u6, y: bkh },
-            { x: u6, y: wkh },
-            { x: u3, y: wkh },
-            { x: u3, y: bkh },
-            { x: u4, y: bkh },
-            { x: u4, y: 0 }
-        ],
-        [Chroma.DSharp]: [
-            { x: u5, y: 0 },
-            { x: u7, y: 0 },
-            { x: u7, y: bkh },
-            { x: u5, y: bkh },
-            { x: u5, y: 0 }
-        ],
-        [Chroma.E]: [
-            { x: u7, y: 0 },
-            { x: u8, y: 0 },
-            { x: u8, y: wkh },
-            { x: u6, y: wkh },
-            { x: u6, y: bkh },
-            { x: u7, y: bkh },
-            { x: u7, y: 0 }
-        ],
-        [Chroma.F]: [
-            { x: u8, y: 0 },
-            { x: u9, y: 0 },
-            { x: u9, y: bkh },
-            { x: u10, y: bkh },
-            { x: u10, y: wkh },
-            { x: u8, y: wkh },
-            { x: u8, y: 0 }
-        ],
-        [Chroma.FSharp]: [
-            { x: u9, y: 0 },
-            { x: u11, y: 0 },
-            { x: u11, y: bkh },
-            { x: u9, y: bkh },
-            { x: u9, y: 0 }
-        ],
-        [Chroma.G]: [
-            { x: u11, y: 0 },
-            { x: u12, y: 0 },
-            { x: u12, y: bkh },
-            { x: u13, y: bkh },
-            { x: u13, y: wkh },
-            { x: u10, y: wkh },
-            { x: u10, y: bkh },
-            { x: u11, y: bkh },
-            { x: u11, y: 0 }
-        ],
-        [Chroma.GSharp]: [
-            { x: u12, y: 0 },
-            { x: u14, y: 0 },
-            { x: u14, y: bkh },
-            { x: u12, y: bkh },
-            { x: u12, y: 0 }
-        ],
-        [Chroma.A]: [
-            { x: u14, y: 0 },
-            { x: u15, y: 0 },
-            { x: u15, y: bkh },
-            { x: u16, y: bkh },
-            { x: u16, y: wkh },
-            { x: u13, y: wkh },
-            { x: u13, y: bkh },
-            { x: u14, y: bkh },
-            { x: u14, y: 0 }
-        ],
-        [Chroma.ASharp]: [
-            { x: u15, y: 0 },
-            { x: u17, y: 0 },
-            { x: u17, y: bkh },
-            { x: u15, y: bkh },
-            { x: u15, y: 0 }
-        ],
-        [Chroma.B]: [
-            { x: u17, y: 0 },
-            { x: u18, y: 0 },
-            { x: u18, y: wkh },
-            { x: u16, y: wkh },
-            { x: u16, y: bkh },
-            { x: u17, y: bkh },
-            { x: u17, y: 0 }
-        ]
-    }
-
-    const pointsToString = (points: Point[]): string => {
-        // TODO: turn rounding back off (debugging only).
-        return points.map(point => `${Math.round(point.x)},${Math.round(point.y)}`).join(', ');
-    }
-
-    // TODO: input should be note (chroma + octave).
-    const getPolygonForNote = (chroma: Chroma): JSX.Element => {
-        const points = keyVerticesLookup[chroma];
-        const pointsString = pointsToString(points);
-        console.log(pointsString);
-        // TODO: no inline styles.
-        // TODO: fix warning: "Each child in a list should have a unique "key" prop."
-        return <polygon points={pointsString} fill="blue" />
-    }
-
-    return getPolygonForNote;
+const getUniqueKeyForNote = (note: Note): string => {
+    return `${note.chroma}${note.octave}`;
 }
 
+const goldenRatio = 2 / (1 + Math.sqrt(5));
+
+// TODO: padding. (Why is there padding left and right already?)
+// TODO: React component for each key? Will want text labels later on.
 const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
-    const getPolygonForNote = getNotePolygonLookup(props);
-    // TODO: replace with range of notes (not chromas) from props numOctaves.
-    const chromas = [Chroma.G];
+
+    let notes: Note[] = [];
+    for (let octave = 1; octave <= props.numOctaves; octave++) {
+        for (const chroma of ALL_CHROMAS) {
+            notes.push({ chroma, octave });
+        }
+    }
+
+    const whiteKeyWidth = 100 / (7 * props.numOctaves);
+    const whiteKeyHeight = 100;
+    const blackKeyWidth = goldenRatio * whiteKeyWidth;
+    const blackKeyHeight = goldenRatio * whiteKeyHeight;
+    const offsetA = blackKeyWidth / 6;
+    const offsetB = blackKeyWidth / 4;
+
+    const blackKeyProps: KeyBaseProps = {
+        width: blackKeyWidth,
+        height: blackKeyHeight,
+        fill: "black"
+    }
+
+    const whiteKeyProps: KeyBaseProps = {
+        width: whiteKeyWidth,
+        height: whiteKeyHeight,
+        fill: "white"
+    }
+
+    const xForChroma: Record<Chroma, number> = {
+        [Chroma.C]: 0,
+        [Chroma.CSharp]: whiteKeyWidth - blackKeyWidth / 2 - offsetA,
+        [Chroma.D]: whiteKeyWidth,
+        [Chroma.DSharp]: 2 * whiteKeyWidth - blackKeyWidth / 2 + offsetA,
+        [Chroma.E]: 2 * whiteKeyWidth,
+        [Chroma.F]: 3 * whiteKeyWidth,
+        [Chroma.FSharp]: 4 * whiteKeyWidth - blackKeyWidth / 2 - offsetB,
+        [Chroma.G]: 4 * whiteKeyWidth,
+        [Chroma.GSharp]: 5 * whiteKeyWidth - blackKeyWidth / 2,
+        [Chroma.A]: 5 * whiteKeyWidth,
+        [Chroma.ASharp]: 6 * whiteKeyWidth - blackKeyWidth / 2 + offsetB,
+        [Chroma.B]: 6 * whiteKeyWidth,
+
+    }
+
+    const getXForNote = (note: Note): number => {
+        return (100*(note.octave - 1)/props.numOctaves) + xForChroma[note.chroma];
+    }
+
+    const blackKeys = notes.filter(note => isBlackKey(note.chroma));
+    const whiteKeys = notes.filter(note => !isBlackKey(note.chroma));
+
     return (
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                {chromas.map(chroma => getPolygonForNote(chroma))}
+                {whiteKeys.map(note => {
+                    return <rect x={getXForNote(note)} key={getUniqueKeyForNote(note)} y="0" {...whiteKeyProps} stroke="gray" stroke-width="0.5"/>
+                })}
+                {blackKeys.map(note => {
+                    return <rect x={getXForNote(note)} y="0" key={getUniqueKeyForNote(note)} {...blackKeyProps} />
+                })}
             </svg>
         </div>
     );
