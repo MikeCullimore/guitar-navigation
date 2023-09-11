@@ -8,7 +8,7 @@ Draw dots on the fretboard to help with finding your way around.
 npm start
 ```
 
-(See `README-CRA.md`)
+(See `README-CRA.md` for original readme from create-react-app.)
 
 ## TODO
 
@@ -24,17 +24,13 @@ npm start
         * For scales, arpeggios could show all notes in advance and highlight current one.
         * Input BPM, convert to milliseconds interval. (Test how reliable timing is as function of interval.)
         * How to parse rhythms? What formats out there?
+    * Given component A for single frame and interface for props, make generic component to animate A over time.
 * Make a standalone script to prototype and debug changes.
-* Separate components for marker, fretboard (separate board, frets, strings, inlays) and container (has xy lookups).
 * Static render of all notes on neck with names as labels.
-    * Function to return note name given string and fret (and tuning!).
+* Function to return note name given string and fret (and tuning!).
 * Semantic input e.g. G chord: each note has string, fret, note name and scale degree.
-* Inputs are array of dots with common styling. Handle semantics elsewhere.
-* Link to exercise generator: scales, arpeggios etc.
-* How to drive state?
-* Typing to capture other inputs e.g. notes, scales.
+* Combine with exercise generator: scales, arpeggios etc.
 * Converter to pass to render layer e.g. for scale might want to show all notes and highlight current.
-* Type to input to render layer is *not" chord or note etc. but markers with semantic properties e.g. labels.
 * Interval labels as consts e.g. `PERFECT_FIFTH = "p5"`
 * CSS: how to do styling from semantic properties e.g. scale degree?
 * Scales: generate, do not hard-code.
