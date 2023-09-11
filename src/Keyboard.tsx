@@ -1,7 +1,7 @@
-// TODO: allow any first and last key, not just whole octaves.
-
+import Key, { KeyBaseProps } from "./Key";
 import { ALL_CHROMAS, Chroma, isBlackKey } from "./chroma";
 
+// TODO: allow any first and last key, not just whole octaves.
 export interface KeyboardProps {
     numOctaves: number;
 }
@@ -12,25 +12,12 @@ export interface Note {
     octave: number;
 }
 
-interface KeyBaseProps {
-    width: number;
-    height: number;
-    fill: string; // TODO: remove (just for debugging).
-}
-
-// TODO: another interface for styling, extend that too?
-export interface KeyProps extends KeyBaseProps {
-    note: Note;
-}
-
 const getUniqueKeyForNote = (note: Note): string => {
     return `${note.chroma}${note.octave}`;
 }
 
 const goldenRatio = 2 / (1 + Math.sqrt(5));
 
-// TODO: padding. (Why is there padding left and right already?)
-// TODO: React component for each key? Will want text labels later on.
 const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
 
     let notes: Note[] = [];
@@ -50,13 +37,16 @@ const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
     const blackKeyProps: KeyBaseProps = {
         width: blackKeyWidth,
         height: blackKeyHeight,
-        fill: "black"
+        fill: "black",
+        stroke: "black"
     }
 
     const whiteKeyProps: KeyBaseProps = {
         width: whiteKeyWidth,
         height: whiteKeyHeight,
-        fill: "white"
+        fill: "white",
+        stroke: "gray",
+        strokeWidth: 0.5
     }
 
     const xForChroma: Record<Chroma, number> = {
@@ -75,6 +65,8 @@ const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
 
     }
 
+    // TODO: should this be in Keyboard or Key? Think former (need awareness of octaves).
+    // TODO: calculate once then lookup?
     const getXForNote = (note: Note): number => {
         return (100*(note.octave - 1)/props.numOctaves) + xForChroma[note.chroma];
     }
@@ -82,14 +74,15 @@ const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
     const blackKeys = notes.filter(note => isBlackKey(note.chroma));
     const whiteKeys = notes.filter(note => !isBlackKey(note.chroma));
 
+    // TODO: add some padding.
     return (
         <div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <svg xmlns="http://www.w3.org/2000/svg">
                 {whiteKeys.map(note => {
-                    return <rect x={getXForNote(note)} key={getUniqueKeyForNote(note)} y="0" {...whiteKeyProps} stroke="gray" stroke-width="0.5"/>
+                    return <Key note={note} x={getXForNote(note)} key={getUniqueKeyForNote(note)} {...whiteKeyProps}/>
                 })}
                 {blackKeys.map(note => {
-                    return <rect x={getXForNote(note)} y="0" key={getUniqueKeyForNote(note)} {...blackKeyProps} />
+                    return <Key note={note} x={getXForNote(note)} key={getUniqueKeyForNote(note)} {...blackKeyProps}/>
                 })}
             </svg>
         </div>
