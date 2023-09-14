@@ -71,7 +71,12 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
 
   const currentFrame = frames[currentStateIndex];
 
-  return <GuitarFretboard markers={currentFrame.markers}/>;
+  return (
+    <div>
+      <GuitarFretboard markers={currentFrame.markers}/>
+      <div className="frameLabel">{currentFrame.label}</div>
+    </div>
+    );
 }
 
 export default GuitarFretboardAnimation;

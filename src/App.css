@@ -19,3 +19,11 @@ svg {
   /* width: 100%; */
   /* height: 100%; */
 }
+
+.frameLabel {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  height: 100vh; /* Optionally, set a height to center vertically in the viewport */
+  font-size: 5cm;
+}
