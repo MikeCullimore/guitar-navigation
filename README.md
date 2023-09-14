@@ -12,6 +12,11 @@ npm start
 
 ## TODO
 
+* Dark mode.
+* Exercise generator:
+    * Adapt from guitar-technique/exercises.py
+    * Minor pentatonic scale.
+    * Scales, arpeggios etc.
 * Animate sequence of frames: see GuitarFretboardAnimation.tsx
     * Frame can be chord or individual note.
     * Start with fixed time interval between frames.
@@ -29,11 +34,9 @@ npm start
 * Static render of all notes on neck with names as labels.
 * Function to return note name given string and fret (and tuning!).
 * Semantic input e.g. G chord: each note has string, fret, note name and scale degree.
-* Combine with exercise generator: scales, arpeggios etc.
 * Converter to pass to render layer e.g. for scale might want to show all notes and highlight current.
 * Interval labels as consts e.g. `PERFECT_FIFTH = "p5"`
 * CSS: how to do styling from semantic properties e.g. scale degree?
 * Scales: generate, do not hard-code.
 * Metronome/click track (audio and visual).
-* Exercise generator for minor pentatonic scale.
 * Use [tonal](https://www.npmjs.com/package/tonal) for music theory?

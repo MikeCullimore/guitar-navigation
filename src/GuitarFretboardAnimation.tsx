@@ -1,31 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { chordLibraryGuitar, fretsToMarkers } from './chords';
+import { chordLibraryGuitar, exampleChords, fretsToMarkers } from './chords';
 import GuitarFretboard from './GuitarFretboard';
 import { Markers } from './Fretboard';
 
 type FrameRef = number | null;
 
 interface GuitarFretboardAnimationProps {
-    chords: string[];
+  frames: FrameData[];
 }
 
-// TODO: change props to array of this.
 interface FrameData extends Markers {
-    millisecondsElapsed: number;
-    label: string; // (Could be note name, chord name...)
+  // millisecondsElapsed: number;
+  label: string; // (Could be note name, chord name...)
 }
+
+// TODO: equivalent function for melodies/arrays of single notes (e.g. scales, arepeggios).
+// TODO: use different colours for different fingerings/voicings.
+export const chordToFrameData = (chordName: string): FrameData => {
+  return {
+    label: chordName,
+    markers: fretsToMarkers(chordLibraryGuitar.get(chordName))
+  };
+}
+
+export const exampleFrames = exampleChords.map(chordName => chordToFrameData(chordName));
 
 // TODO: show chord name as well.
 // TODO: support variable time interval between chord changes.
 const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props: GuitarFretboardAnimationProps) => {
-  const states = props.chords;
+  const frames = props.frames;
   const [currentStateIndex, setCurrentStateIndex] = useState(0);
 
   const animationFrameIdRef = useRef<FrameRef>(null);
   const startTimeRef = useRef<FrameRef>(null);
 
   const scheduleTransition = () => {
-    const nextStateIndex = (currentStateIndex + 1) % states.length;
+    const nextStateIndex = (currentStateIndex + 1) % frames.length;
 
     const animate = (timestamp: number) => {
       if (!startTimeRef.current) {
@@ -47,6 +57,9 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
   };
 
   useEffect(() => {
+    // TODO: fix linter warning:
+    // React Hook useEffect has a missing dependency: 'scheduleTransition'.
+    // Either include it or remove the dependency array  react-hooks/exhaustive-deps
     scheduleTransition();
 
     return () => {
@@ -56,11 +69,9 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
     };
   }, [currentStateIndex]);
 
-  // TODO: parse chord names to note markers in advance, pass as props.
-  const currentChordName = states[currentStateIndex];
-  const markers = fretsToMarkers(chordLibraryGuitar.get(currentChordName))
+  const currentFrame = frames[currentStateIndex];
 
-  return <GuitarFretboard markers={markers}/>;
+  return <GuitarFretboard markers={currentFrame.markers}/>;
 }
 
 export default GuitarFretboardAnimation;

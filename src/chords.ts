@@ -3,6 +3,7 @@
 // TODO: need richer type for barre chords? Or use hyphens?
 
 import { NoteMarker } from "./Fretboard";
+import { Chroma } from "./chroma";
 
 type Fret = number | null;
 
@@ -35,10 +36,18 @@ const parseChordString = (chordString: string): Fret[] => {
 
 // TODO: change key to enum for typing?
 // TODO: array of voicings for given chord name.
-// TODO: equivalent chord library for piano.
 export const chordLibraryGuitar = new Map<string, Fret[]>([
     ['E6', parseChordString("xxx999")],
     ['F', parseChordString("xxx997")],
     ['Badd9', parseChordString("xxx879")],
     ['F#', parseChordString("xxx676")]
+]);
+
+export const exampleChords = Array.from(chordLibraryGuitar.keys());
+
+// TODO: generate major and minor for all keys.
+// TODO: then add other chord types.
+// TODO: map from guitar to piano? Remove duplicate intervals enough?
+export const chordLibraryPiano = new Map<string, Chroma[]>([
+    ['C', [Chroma.C, Chroma.E, Chroma.G]]
 ]);
