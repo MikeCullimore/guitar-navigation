@@ -5,6 +5,7 @@ import './App.css';
 // import Fretboard from './Fretboard';
 // import GuitarFretboard from './GuitarFretboard';
 import GuitarFretboardAnimation, { exampleFrames } from './GuitarFretboardAnimation';
+import GuitarPractise from './GuitarPractise';
 // import Keyboard from './Keyboard';
 // import StateTransitionComponent from './StateTransitionComponent';
 
@@ -13,8 +14,9 @@ function App() {
     // <Fretboard numStrings={6} numFrets={22} markers={fretsToMarkers(chordLibraryGuitar.get('F#'))}/>
     // <GuitarFretboard markers={fretsToMarkers(chordLibraryGuitar.get('Badd9'))}/>
     // <StateTransitionComponent/>
-    <GuitarFretboardAnimation frames={exampleFrames}/>
+    // <GuitarFretboardAnimation frames={exampleFrames}/>
     // <Keyboard numOctaves={2}/>
+    <GuitarPractise/>
   );
 }
 

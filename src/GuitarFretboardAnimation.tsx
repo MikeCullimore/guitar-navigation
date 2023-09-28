@@ -25,7 +25,6 @@ export const chordToFrameData = (chordName: string): FrameData => {
 
 export const exampleFrames = exampleChords.map(chordName => chordToFrameData(chordName));
 
-// TODO: show chord name as well.
 // TODO: support variable time interval between chord changes.
 const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props: GuitarFretboardAnimationProps) => {
   const frames = props.frames;

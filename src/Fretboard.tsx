@@ -1,3 +1,4 @@
+// TODO: option to use capo (changes render and note identities).
 // TODO: prevent the vertical scrollbar from showing. Steps:
 // Put Fretboard component in a div, full width of screen.
 // Change positions to % (of container). Try with keyboard then apply here.

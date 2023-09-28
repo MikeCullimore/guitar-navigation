@@ -46,7 +46,7 @@ export const chordLibraryGuitar = new Map<string, Fret[]>([
 export const exampleChords = Array.from(chordLibraryGuitar.keys());
 
 // TODO: generate major and minor for all keys.
-// TODO: then add other chord types.
+// TODO: then add other chord types: 5, 7, add9, sus etc.
 // TODO: map from guitar to piano? Remove duplicate intervals enough?
 export const chordLibraryPiano = new Map<string, Chroma[]>([
     ['C', [Chroma.C, Chroma.E, Chroma.G]]

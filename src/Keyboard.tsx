@@ -65,7 +65,6 @@ const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
 
     }
 
-    // TODO: should this be in Keyboard or Key? Think former (need awareness of octaves).
     // TODO: calculate once then lookup?
     const getXForNote = (note: Note): number => {
         return (100*(note.octave - 1)/props.numOctaves) + xForChroma[note.chroma];
