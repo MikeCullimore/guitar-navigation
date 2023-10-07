@@ -16,6 +16,15 @@ export enum Chroma {
 
 export const ALL_CHROMAS = Object.values(Chroma);
 
+export interface Note {
+    chroma: Chroma;
+    octave: number;
+}
+
+export const noteToString = (note: Note): string => {
+    return `chroma = ${note.chroma}, octave = ${note.octave}`
+}
+
 const blackPianoKeys: Chroma[] = [
     Chroma.CSharp,
     Chroma.DSharp,

@@ -14,11 +14,9 @@ npm start
 
 * Combine fretboard and keyboard in single component.
 * Exercise generator:
-    * Intro page with description of exercise
-    * Adapt from guitar-technique/exercises.py
-    * Minor pentatonic scale.
-    * Scales, arpeggios etc.
+    * Intro page with description of exercise.
     * Loop forever: generate random next exercise.
+    * Add animation (inputs?) to exercise description.
 * Animate sequence of frames: see GuitarFretboardAnimation.tsx
     * Frame can be chord or individual note.
     * Start with fixed time interval between frames.
@@ -33,8 +31,9 @@ npm start
         * How to parse rhythms? What formats out there?
     * Given component A for single frame and interface for props, make generic component to animate A over time.
 * Make a standalone script to prototype and debug changes.
+    * `nodemon`: see e.g. mermaid diagram compiler script.
 * Static render of all notes on neck with names as labels.
-* Function to return note name given string and fret (and tuning!).
+* Function to return note name given string and fret (and tuning, and capo position if present).
 * Semantic input e.g. G chord: each note has string, fret, note name and scale degree.
 * Converter to pass to render layer e.g. for scale might want to show all notes and highlight current.
 * Interval labels as consts e.g. `PERFECT_FIFTH = "p5"`
@@ -42,6 +41,6 @@ npm start
 * Scales: generate, do not hard-code.
 * Metronome/click track (audio and visual).
 * Use [tonal](https://www.npmjs.com/package/tonal) for music theory?
-* Dark mode.
 * Chord diagrams
 * TAB
+* Dark mode. Absolutely lowest priority! :D

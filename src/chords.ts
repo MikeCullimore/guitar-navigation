@@ -3,7 +3,7 @@
 // TODO: need richer type for barre chords? Or use hyphens?
 
 import { NoteMarker } from "./Fretboard";
-import { Chroma } from "./chroma";
+import { Chroma } from "./musicTheory";
 
 type Fret = number | null;
 

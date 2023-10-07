@@ -1,4 +1,6 @@
-// TODO: return string message then animation (inputs).
+// TODO: return string message then animation (inputs). Will some be static images?
+// TODO: add exercise: variations of a given chord (dominant, diminished etc.).
+// TODO: add exercise: chord, arpeggio, chord. Rick Beato: https://www.youtube.com/live/19jF6ZwJm-A?si=AoA5QKwu2aZ8qF_W
 
 export const getRandomGuitarExercise = (): string => {
     // TODO: rather than select at random each time, randomise the list then select each once?
@@ -72,7 +74,6 @@ const getRandomGuitarString = (): string => {
 const noteNames = ["A", "A#", "B♭", "B", "C", "C#", "D♭", "D", "D#", "E♭", "E", "F", "F#", "G♭", "G#"];
 
 const getRandomNote = (): string => {
-    // TODO: include enharmonic equivalents e.g. C# is also Db.
     return getRandomElementFromArray(noteNames);
 }
 

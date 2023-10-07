@@ -4,7 +4,7 @@ import './App.css';
 // import { chordLibraryGuitar, fretsToMarkers } from './chords';
 // import Fretboard from './Fretboard';
 // import GuitarFretboard from './GuitarFretboard';
-import GuitarFretboardAnimation, { exampleFrames } from './GuitarFretboardAnimation';
+// import GuitarFretboardAnimation, { exampleFrames } from './GuitarFretboardAnimation';
 import GuitarPractise from './GuitarPractise';
 // import Keyboard from './Keyboard';
 // import StateTransitionComponent from './StateTransitionComponent';

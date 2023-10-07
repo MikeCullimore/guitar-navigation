@@ -1,15 +1,9 @@
 import Key, { KeyBaseProps } from "./Key";
-import { ALL_CHROMAS, Chroma, isBlackKey } from "./chroma";
+import { ALL_CHROMAS, Chroma, Note, isBlackKey } from "./musicTheory";
 
 // TODO: allow any first and last key, not just whole octaves.
 export interface KeyboardProps {
     numOctaves: number;
-}
-
-// TODO: move to another file (but which?). Not keyboard specific.
-export interface Note {
-    chroma: Chroma;
-    octave: number;
 }
 
 const getUniqueKeyForNote = (note: Note): string => {
