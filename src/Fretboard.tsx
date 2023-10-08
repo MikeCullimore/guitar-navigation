@@ -35,10 +35,13 @@ const c1 = 7.52403813;
 const b = (100 - 2*padding)/100
 const strokeWidth = .3;
 
-// TODO: is this a component, not an interface? Move over to NoteMarker.tsx.
-export interface NoteMarker {
-    string: number; // TODO: function in root component to translate into x, y.
+export interface FretboardPosition {
+    string: number;
     fret: number;
+}
+
+// TODO: is this a component, not an interface? Move over to NoteMarker.tsx.
+export interface NoteMarker extends FretboardPosition {
     fillColour: string;
     radius?: number; // TODO: how to get in same units as x, y?
     label?: string;

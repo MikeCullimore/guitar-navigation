@@ -1,11 +1,21 @@
 import { getRandomGuitarExercise } from "./guitarExercises";
-import { getFretToNoteLookupForString } from "./guitarTuning";
+import { getChromaToPositionsLookupForGuitar, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
 import { Chroma, Note, noteToString } from "./musicTheory";
 
 interface GuitarExerciseProps {}
 
-const GuitarPractise: React.FC<GuitarExerciseProps> = (props: GuitarExerciseProps) => {
-    // TODO: remove when debugging complete. (Set up to do this offline.)
+// TODO: make this a unit test.
+const debugGetChromaToPositionsLookupForGuitar = () => {
+    const numFrets = 22;
+    const getAllPositionsForChroma = getChromaToPositionsLookupForGuitar(standardGuitarTuning, numFrets);
+    const chroma = Chroma.E;
+    const positions = getAllPositionsForChroma(chroma);
+    const positionsString = positions.map(position => `(${position.string}, ${position.fret})`).join(', ');
+    console.log(`Positions for chroma ${chroma}: ${positionsString}`);
+}
+
+// TODO: make this a unit test.
+const debugGetFretToNoteLookupForString = () => {
     const openE: Note = {
         chroma: Chroma.E,
         octave: 2
@@ -16,6 +26,11 @@ const GuitarPractise: React.FC<GuitarExerciseProps> = (props: GuitarExerciseProp
     const note2 = getNoteAtFret(14);
     console.log(`note = ${noteToString(note)}`);
     console.log(`note2 = ${noteToString(note2)}`);
+}
+
+const GuitarPractise: React.FC<GuitarExerciseProps> = (props: GuitarExerciseProps) => {
+    debugGetChromaToPositionsLookupForGuitar();
+    debugGetFretToNoteLookupForString();
     
     return (
         <div className="guitarExercise">{getRandomGuitarExercise()}</div>
