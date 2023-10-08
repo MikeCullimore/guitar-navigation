@@ -33,9 +33,9 @@ npm start
 * Make a standalone script to prototype and debug changes.
     * `nodemon`: see e.g. mermaid diagram compiler script.
 * Static render of all notes on neck with names as labels.
-* Function to return note name given string and fret (and tuning, and capo position if present).
 * Semantic input e.g. G chord: each note has string, fret, note name and scale degree.
 * Converter to pass to render layer e.g. for scale might want to show all notes and highlight current.
+* Text to speech to read out exercise instructions.
 * Interval labels as consts e.g. `PERFECT_FIFTH = "p5"`
 * CSS: how to do styling from semantic properties e.g. scale degree?
 * Scales: generate, do not hard-code.

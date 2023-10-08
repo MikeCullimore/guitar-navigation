@@ -1,15 +1,51 @@
 // TODO: return string message then animation (inputs). Will some be static images?
 // TODO: add exercise: variations of a given chord (dominant, diminished etc.).
 // TODO: add exercise: chord, arpeggio, chord. Rick Beato: https://www.youtube.com/live/19jF6ZwJm-A?si=AoA5QKwu2aZ8qF_W
+// TODO: add exercise: play pitch audio, find it on fretboard.
+
+import { NoteMarker } from "./Fretboard";
+import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
+import { getChromaToPositionsLookupForGuitar, standardGuitarTuning } from "./guitarTuning";
+import { ALL_CHROMAS, Chroma } from "./musicTheory";
+
+const NUM_FRETS = 22; // Strat
 
 export const getRandomGuitarExercise = (): string => {
     // TODO: rather than select at random each time, randomise the list then select each once?
-    // (But then no longer stateless.)
+    // (But then no longer stateless. Handle in component?)
     const exerciseFunction = getRandomElementFromArray(allExerciseFunctions);
     return exerciseFunction();
 }
 
-const playRandomChromaAllPositions = (): string => {
+interface GuitarExercise extends GuitarFretboardAnimationProps {
+    description: string;
+}
+
+// TODO: sort by pitch?
+// TODO: loop?
+// TODO: show all positions in say grey, highlight current in say blue.
+export const playRandomChromaAllPositions = (): GuitarExercise => {
+    // TODO: reinstate randomness.
+    const chroma = Chroma.E; // getRandomChroma();
+    const getAllPositionsForChroma = getChromaToPositionsLookupForGuitar(standardGuitarTuning, NUM_FRETS);
+    const positions = getAllPositionsForChroma(chroma);
+    const frames: FrameData[] = positions.map(position => {
+        const marker: NoteMarker = {
+            fillColour: "blue",
+            ...position
+        };
+        return {
+            label: `Fret ${position.fret}`,
+            markers: [marker]
+        }
+    });
+    return {
+        description: `Play every ${chroma} on the neck`,
+        frames
+    };
+}
+
+const playRandomNoteAllPositions = (): string => {
     return `Play every ${getRandomNote()} on the neck`;
 }
 
@@ -51,7 +87,7 @@ const playQuasiChromaticScaleRandomFingering = (): string => {
 
 // TODO: weight some exercises more than others?
 const allExerciseFunctions = [
-    playRandomChromaAllPositions,
+    playRandomNoteAllPositions,
     playChromaticScaleOnRandomString,
     playRandomChord,
     playRandomSong,
@@ -71,10 +107,15 @@ const getRandomGuitarString = (): string => {
     return getRandomElementFromArray(guitarStringNames);
 }
 
+// TODO: map these to Chroma enum.
 const noteNames = ["A", "A#", "B♭", "B", "C", "C#", "D♭", "D", "D#", "E♭", "E", "F", "F#", "G♭", "G#"];
 
 const getRandomNote = (): string => {
     return getRandomElementFromArray(noteNames);
+}
+
+const getRandomChroma = (): Chroma => {
+    return getRandomElementFromArray(ALL_CHROMAS);
 }
 
 // TODO: add common chords.

@@ -1,5 +1,5 @@
 import { FretboardPosition } from "./Fretboard";
-import { ALL_CHROMAS, Chroma, Note, noteToString } from "./musicTheory";
+import { ALL_CHROMAS, Chroma, Note } from "./musicTheory";
 
 export const standardGuitarTuning: Note[] = [
     {chroma: Chroma.E, octave: 2},

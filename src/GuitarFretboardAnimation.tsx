@@ -5,11 +5,11 @@ import { Markers } from './Fretboard';
 
 type FrameRef = number | null;
 
-interface GuitarFretboardAnimationProps {
+export interface GuitarFretboardAnimationProps {
   frames: FrameData[];
 }
 
-interface FrameData extends Markers {
+export interface FrameData extends Markers {
   // millisecondsElapsed: number;
   label: string; // (Could be note name, chord name...)
 }
@@ -33,6 +33,9 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
   const animationFrameIdRef = useRef<FrameRef>(null);
   const startTimeRef = useRef<FrameRef>(null);
 
+  // TODO: interval as prop also.
+  const intervalMilliseconds = 5000;
+
   const scheduleTransition = () => {
     const nextStateIndex = (currentStateIndex + 1) % frames.length;
 
@@ -42,8 +45,7 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
       }
       const elapsedTime = timestamp - startTimeRef.current!;
 
-      // TODO: interval as prop also.
-      if (elapsedTime >= 2000) {
+      if (elapsedTime >= intervalMilliseconds) {
         setCurrentStateIndex(nextStateIndex);
         startTimeRef.current = null;
         scheduleTransition();

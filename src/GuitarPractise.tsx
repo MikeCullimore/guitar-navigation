@@ -1,4 +1,5 @@
-import { getRandomGuitarExercise } from "./guitarExercises";
+import GuitarFretboardAnimation from "./GuitarFretboardAnimation";
+import { getRandomGuitarExercise, playRandomChromaAllPositions } from "./guitarExercises";
 import { getChromaToPositionsLookupForGuitar, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
 import { Chroma, Note, noteToString } from "./musicTheory";
 
@@ -29,11 +30,16 @@ const debugGetFretToNoteLookupForString = () => {
 }
 
 const GuitarPractise: React.FC<GuitarExerciseProps> = (props: GuitarExerciseProps) => {
-    debugGetChromaToPositionsLookupForGuitar();
-    debugGetFretToNoteLookupForString();
+    // debugGetChromaToPositionsLookupForGuitar();
+    // debugGetFretToNoteLookupForString();
+
+    const exercise = playRandomChromaAllPositions();
     
     return (
-        <div className="guitarExercise">{getRandomGuitarExercise()}</div>
+        // <div className="guitarExercise">{getRandomGuitarExercise()}</div>
+        // TODO: use label (or make optional on interface).
+        // TODO: enable cycling through exercises (on a timer?).
+        <GuitarFretboardAnimation frames={exercise.frames}/>
     );
 }
 
