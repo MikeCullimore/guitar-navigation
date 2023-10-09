@@ -10,6 +10,7 @@
 // TODO: ensure marker width is less than smallest fret spacing and smallest string spacing.
 // TODO: make markers square not circles to better fit text.
 // TODO: use tooltips to provide extra information on hover?
+// TODO: string not played, mark with an X (chord mode only).
 
 // TODO: remove these global variables (pass down from fretboard props).
 const numStrings = 6;
@@ -129,9 +130,9 @@ const Notes = (markers: NoteMarker[]): JSX.Element[] => {
         const y = getStringYPosition(marker.string);
         if (marker.fret === 0) {
             const strokeWidth = 0.1
-            return <circle key={index} cx={x-strokeWidth} cy={y} r={r} fill="none" stroke="blue" stroke-width={strokeWidth} />
+            return <circle key={index} cx={x-strokeWidth} cy={y} r={r} fill="none" stroke={marker.fillColour} stroke-width={strokeWidth} />
         } else {    
-            return <circle key={index} cx={x} cy={y} r={r} fill="blue" />
+            return <circle key={index} cx={x} cy={y} r={r} fill={marker.fillColour} />
         }
     });
 }

@@ -10,13 +10,13 @@ export const standardGuitarTuning: Note[] = [
     {chroma: Chroma.E, octave: 4}
 ];
 
-// TODO: define inner function signature once and share in the two places.
-export const getFretToNoteLookupForString = (openNote: Note, numFrets: number): ((fret: number) => Note) => {
+type FretToNote = (fret: number) => Note;
+
+export const getFretToNoteLookupForString = (openNote: Note, numFrets: number): FretToNote => {
     const openStringChromaIndex = ALL_CHROMAS.findIndex((chroma) => chroma === openNote.chroma);
-    // console.log(`openStringChromaIndex = ${openStringChromaIndex}`);
     const numChromas = ALL_CHROMAS.length;
 
-    const getNoteAtFret = (fret: number): Note => {
+    const getNoteAtFret: FretToNote = (fret: number) => {
         if (fret < 0) {
             throw Error(`Invalid fret ${fret}, minimum is 0.`);
         }
@@ -25,9 +25,7 @@ export const getFretToNoteLookupForString = (openNote: Note, numFrets: number): 
         }
         const chromaIndexUnwrapped = openStringChromaIndex + fret;
         const octaveOffset = Math.floor(chromaIndexUnwrapped / numChromas);
-        // console.log(`octaveOffset = ${octaveOffset}`);
         const fretChromaIndex = chromaIndexUnwrapped % numChromas;
-        // console.log(`fretChromaIndex = ${fretChromaIndex}`);
         const chroma = ALL_CHROMAS[fretChromaIndex];
         const octave = openNote.octave + octaveOffset;
         return {
@@ -38,9 +36,11 @@ export const getFretToNoteLookupForString = (openNote: Note, numFrets: number): 
     return getNoteAtFret;
 }
 
-export const getChromaToPositionsLookupForGuitar = (openStringNotes: Note[], numFrets: number): ((chroma: Chroma) => FretboardPosition[]) => {
+type ChromaToPosition = (chroma: Chroma) => FretboardPosition[];
+
+export const getChromaToPositionsLookupForGuitar = (openStringNotes: Note[], numFrets: number): ChromaToPosition => {
     const lookupChromaToPositions = new Map<Chroma, FretboardPosition[]>();
-    const frets = Array.from(Array(numFrets + 1).keys());
+    const frets = Array.from(Array(numFrets + 1).keys()).reverse();
     const numStrings = openStringNotes.length;
     openStringNotes.forEach((openStringNote, index) => {
         const string = numStrings - index;
@@ -57,7 +57,7 @@ export const getChromaToPositionsLookupForGuitar = (openStringNotes: Note[], num
             }
         });
     });
-    const getAllPositionsForChroma = (chroma: Chroma): FretboardPosition[] => {
+    const getAllPositionsForChroma: ChromaToPosition = (chroma: Chroma) => {
         const positions = lookupChromaToPositions.get(chroma);
         return positions || [];
     }

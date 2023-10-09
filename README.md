@@ -29,6 +29,7 @@ npm start
         * For scales, arpeggios could show all notes in advance and highlight current one.
         * Input BPM, convert to milliseconds interval. (Test how reliable timing is as function of interval.)
         * How to parse rhythms? What formats out there?
+        * Refactor to require only diff from previous frame? (React will do this?)
     * Given component A for single frame and interface for props, make generic component to animate A over time.
 * Make a standalone script to prototype and debug changes.
     * `nodemon`: see e.g. mermaid diagram compiler script.
@@ -36,11 +37,13 @@ npm start
 * Semantic input e.g. G chord: each note has string, fret, note name and scale degree.
 * Converter to pass to render layer e.g. for scale might want to show all notes and highlight current.
 * Text to speech to read out exercise instructions.
+* UI controls for e.g. exercise speed (e.g. BPM at which to show scale animation).
 * Interval labels as consts e.g. `PERFECT_FIFTH = "p5"`
 * CSS: how to do styling from semantic properties e.g. scale degree?
 * Scales: generate, do not hard-code.
 * Metronome/click track (audio and visual).
 * Use [tonal](https://www.npmjs.com/package/tonal) for music theory?
 * Chord diagrams
+* Fonts: choose appropriate font in each context.
 * TAB
 * Dark mode. Absolutely lowest priority! :D

@@ -2,6 +2,7 @@
 // TODO: add exercise: variations of a given chord (dominant, diminished etc.).
 // TODO: add exercise: chord, arpeggio, chord. Rick Beato: https://www.youtube.com/live/19jF6ZwJm-A?si=AoA5QKwu2aZ8qF_W
 // TODO: add exercise: play pitch audio, find it on fretboard.
+// TODO: add exercise: given position, name the note (delay before showing it).
 
 import { NoteMarker } from "./Fretboard";
 import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
@@ -21,14 +22,15 @@ interface GuitarExercise extends GuitarFretboardAnimationProps {
     description: string;
 }
 
-// TODO: sort by pitch?
-// TODO: loop?
-// TODO: show all positions in say grey, highlight current in say blue.
 export const playRandomChromaAllPositions = (): GuitarExercise => {
-    // TODO: reinstate randomness.
-    const chroma = Chroma.E; // getRandomChroma();
+    const chroma = getRandomChroma();
     const getAllPositionsForChroma = getChromaToPositionsLookupForGuitar(standardGuitarTuning, NUM_FRETS);
     const positions = getAllPositionsForChroma(chroma);
+    const allMarkers: NoteMarker[] = positions.map(position => {
+        return {
+            fillColour: "lightblue",
+            ...position
+        }});
     const frames: FrameData[] = positions.map(position => {
         const marker: NoteMarker = {
             fillColour: "blue",
@@ -36,12 +38,12 @@ export const playRandomChromaAllPositions = (): GuitarExercise => {
         };
         return {
             label: `Fret ${position.fret}`,
-            markers: [marker]
+            markers: [...allMarkers, marker]
         }
     });
     return {
         description: `Play every ${chroma} on the neck`,
-        frames
+        frames: [...frames.reverse(), ...frames]
     };
 }
 

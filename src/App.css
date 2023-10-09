@@ -1,6 +1,7 @@
 /* TODO: no longer need this either? */
 .App {
   text-align: center;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 html, body {
@@ -26,6 +27,7 @@ svg {
   align-items: center; /* Vertical centering */
   height: 100vh; /* Optionally, set a height to center vertically in the viewport */
   font-size: 5cm;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .guitarExercise {

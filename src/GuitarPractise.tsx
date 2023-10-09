@@ -39,6 +39,7 @@ const GuitarPractise: React.FC<GuitarExerciseProps> = (props: GuitarExerciseProp
         // <div className="guitarExercise">{getRandomGuitarExercise()}</div>
         // TODO: use label (or make optional on interface).
         // TODO: enable cycling through exercises (on a timer?).
+        // TODO: show exercise description before the animation.
         <GuitarFretboardAnimation frames={exercise.frames}/>
     );
 }
