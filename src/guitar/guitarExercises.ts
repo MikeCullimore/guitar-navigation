@@ -1,4 +1,3 @@
-// TODO: return string message then animation (inputs). Will some be static images?
 // TODO: add exercise: one chord, all positions along the neck.
 // TODO: add exercise: variations of a given chord (dominant, diminished etc.).
 // See https://virtualpiano.vercel.app/
@@ -11,7 +10,7 @@
 import { FretboardPosition, NoteMarker } from "./Fretboard";
 import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
 import { getChromaToPositionsLookupForGuitar, standardGuitarTuning } from "./guitarTuning";
-import { ALL_CHROMAS, Chroma } from "./musicTheory";
+import { ALL_CHROMAS, Chroma } from "../musicTheory";
 
 const NUM_FRETS = 22; // Strat
 
@@ -58,10 +57,12 @@ export const playRandomChromaAllPositions = (): GuitarExercise => {
     const positionsLooped = [...positions.reverse(), ...positions];
     const frames = showAllNotesHighlightCurrent(positionsLooped, "blue", "lightskyblue");
     return {
-        description: `Play every ${chroma} on the neck`,
+        description: `Play every ${chroma}`,
         frames
     };
 }
+
+// TODO: refactor exercises below to return animation frames, not only description.
 
 const playRandomNoteAllPositions = (): string => {
     return `Play every ${getRandomNote()} on the neck`;

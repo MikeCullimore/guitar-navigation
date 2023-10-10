@@ -1,4 +1,4 @@
-import { Note } from "./musicTheory";
+import { Note } from "../musicTheory";
 
 const defaultStroke = "lightgray";
 const defaultStrokeWidth = 0.5;

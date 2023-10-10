@@ -1,8 +1,8 @@
+// TODO: separate files for piano and guitar?
 // TODO: fingering suggestions?
-// TODO: function to get note names from string/fret given guitar tuning.
 // TODO: need richer type for barre chords? Or use hyphens?
 
-import { NoteMarker } from "./Fretboard";
+import { NoteMarker } from "./guitar/Fretboard";
 import { Chroma } from "./musicTheory";
 
 type Fret = number | null;

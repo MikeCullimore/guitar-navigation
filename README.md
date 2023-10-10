@@ -13,6 +13,7 @@ npm start
 ## TODO
 
 * Combine fretboard and keyboard in single component.
+    * Reconcile SVG dimensions (currently one works, other doesn't).
 * Exercise generator:
     * Intro page with description of exercise.
     * Loop forever: generate random next exercise.
@@ -47,4 +48,5 @@ npm start
 * Fonts: choose appropriate font in each context.
 * TAB
 * Dark mode. Absolutely lowest priority! :D
-* Organise repo: start by grouping piano and guitar files into subfolders.
+* Minimise commented code: ripe for bugs!
+* Organise styles (not all in `App.css`): [styled components](https://styled-components.com/)?

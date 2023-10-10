@@ -1,5 +1,5 @@
 import Key, { KeyBaseProps } from "./Key";
-import { ALL_CHROMAS, Chroma, Note, isBlackKey } from "./musicTheory";
+import { ALL_CHROMAS, Chroma, Note, isBlackKey } from "../musicTheory";
 
 // TODO: allow any first and last key, not just whole octaves.
 export interface KeyboardProps {

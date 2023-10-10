@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { chordLibraryGuitar, exampleChords, fretsToMarkers } from './chords';
+import { chordLibraryGuitar, exampleChords, fretsToMarkers } from '../chords';
 import GuitarFretboard from './GuitarFretboard';
 import { Markers } from './Fretboard';
 
