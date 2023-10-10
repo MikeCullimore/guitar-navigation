@@ -8,7 +8,7 @@ import { Chroma } from "./musicTheory";
 type Fret = number | null;
 
 // TODO: add note name, scale degree.
-export const fretsToMarkers = (frets: Fret[] | undefined): NoteMarker[] => {
+export const fretsToMarkers = (frets: Fret[]): NoteMarker[] => {
     if (!frets) return [];
     return frets.flatMap((fret: Fret, index) => {
         if (fret !== null) {
@@ -19,13 +19,13 @@ export const fretsToMarkers = (frets: Fret[] | undefined): NoteMarker[] => {
                 radius: .6,
             } as NoteMarker;
         } else {
-            return []; // TODO: also need to cast as NoteMarker?
+            return [];
         }
     });
 }
 
 const numStrings = 6; // TODO: pass as arg.
-const parseChordString = (chordString: string): Fret[] => {
+export const chordStringToFrets = (chordString: string): Fret[] => {
     if (chordString.length !== numStrings) {
         throw new Error(`Invalid chord string ${chordString}, expected ${numStrings} characters.`);
     }
@@ -34,13 +34,13 @@ const parseChordString = (chordString: string): Fret[] => {
     });
 }
 
-// TODO: change key to enum for typing?
+// TODO: change key to enum for typing? Or use chord string as key?
 // TODO: array of voicings for given chord name.
 export const chordLibraryGuitar = new Map<string, Fret[]>([
-    ['E6', parseChordString("xxx999")],
-    ['F', parseChordString("xxx997")],
-    ['Badd9', parseChordString("xxx879")],
-    ['F#', parseChordString("xxx676")]
+    ['E6', chordStringToFrets("xxx999")],
+    ['F', chordStringToFrets("xxx997")],
+    ['Badd9', chordStringToFrets("xxx879")],
+    ['F#', chordStringToFrets("xxx676")]
 ]);
 
 export const exampleChords = Array.from(chordLibraryGuitar.keys());

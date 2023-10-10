@@ -1,4 +1,5 @@
 // TODO: layout containers for string label, fretboard and keyboard.
+// TODO: menu to choose exercises? Button to skip to next?
 
 import './App.css';
 import GuitarPractise from './guitar/GuitarPractise';

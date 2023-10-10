@@ -2,6 +2,7 @@ import GuitarFretboardAnimation from "./GuitarFretboardAnimation";
 import { getRandomGuitarExercise, playRandomChromaAllPositions } from "./guitarExercises";
 import { getChromaToPositionsLookupForGuitar, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
 import { Chroma, Note, noteToString } from "../musicTheory";
+import { youOnlyLiveOnce } from "./guitarSongs";
 
 // TODO: make this a unit test.
 const debugGetChromaToPositionsLookupForGuitar = () => {
@@ -31,7 +32,8 @@ const GuitarPractise: React.FC<{}> = () => {
     // debugGetChromaToPositionsLookupForGuitar();
     // debugGetFretToNoteLookupForString();
 
-    const exercise = playRandomChromaAllPositions();
+    // const exercise = playRandomChromaAllPositions();
+    const exercise = youOnlyLiveOnce;
     
     return (
         // <div className="guitarExercise">{getRandomGuitarExercise()}</div>

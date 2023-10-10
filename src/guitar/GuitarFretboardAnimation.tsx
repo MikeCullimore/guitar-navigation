@@ -19,7 +19,7 @@ export interface FrameData extends Markers {
 export const chordToFrameData = (chordName: string): FrameData => {
   return {
     label: chordName,
-    markers: fretsToMarkers(chordLibraryGuitar.get(chordName))
+    markers: fretsToMarkers(chordLibraryGuitar.get(chordName) ?? [])
   };
 }
 
