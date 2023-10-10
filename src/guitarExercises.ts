@@ -1,10 +1,14 @@
 // TODO: return string message then animation (inputs). Will some be static images?
+// TODO: add exercise: one chord, all positions along the neck.
 // TODO: add exercise: variations of a given chord (dominant, diminished etc.).
+// See https://virtualpiano.vercel.app/
+// Source code: https://github.com/sophiekoonin/virtualpiano
 // TODO: add exercise: chord, arpeggio, chord. Rick Beato: https://www.youtube.com/live/19jF6ZwJm-A?si=AoA5QKwu2aZ8qF_W
 // TODO: add exercise: play pitch audio, find it on fretboard.
 // TODO: add exercise: given position, name the note (delay before showing it).
+// TODO: add exercise: all chords in given key.
 
-import { NoteMarker } from "./Fretboard";
+import { FretboardPosition, NoteMarker } from "./Fretboard";
 import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
 import { getChromaToPositionsLookupForGuitar, standardGuitarTuning } from "./guitarTuning";
 import { ALL_CHROMAS, Chroma } from "./musicTheory";
@@ -22,28 +26,40 @@ interface GuitarExercise extends GuitarFretboardAnimationProps {
     description: string;
 }
 
+// TODO: similar functions to convert positions to frame data, e.g.:
+// 1) Just show marker for current note
+// 2) Show current note in one colour, next one in another (say grey) for melodies, leads.
+// 3) As (2) but for chords.
+// TODO: accommodate full styling options for markers, using their existing types.
+// TODO: decouple label generation?
+const showAllNotesHighlightCurrent = (positions: FretboardPosition[], currentNoteColour: string, otherNotesColour: string): FrameData[] => {
+    const allMarkers: NoteMarker[] = positions.map(position => {
+        return {
+            fillColour: otherNotesColour,
+            ...position
+        }
+    });
+    return positions.map(position => {
+        const marker: NoteMarker = {
+            fillColour: currentNoteColour,
+            ...position
+        };
+        return {
+            label: `Fret ${position.fret}`, // TODO: string name also?
+            markers: [...allMarkers, marker]
+        }
+    });
+}
+
 export const playRandomChromaAllPositions = (): GuitarExercise => {
     const chroma = getRandomChroma();
     const getAllPositionsForChroma = getChromaToPositionsLookupForGuitar(standardGuitarTuning, NUM_FRETS);
     const positions = getAllPositionsForChroma(chroma);
-    const allMarkers: NoteMarker[] = positions.map(position => {
-        return {
-            fillColour: "lightblue",
-            ...position
-        }});
-    const frames: FrameData[] = positions.map(position => {
-        const marker: NoteMarker = {
-            fillColour: "blue",
-            ...position
-        };
-        return {
-            label: `Fret ${position.fret}`,
-            markers: [...allMarkers, marker]
-        }
-    });
+    const positionsLooped = [...positions.reverse(), ...positions];
+    const frames = showAllNotesHighlightCurrent(positionsLooped, "blue", "lightskyblue");
     return {
         description: `Play every ${chroma} on the neck`,
-        frames: [...frames.reverse(), ...frames]
+        frames
     };
 }
 
@@ -97,7 +113,7 @@ const allExerciseFunctions = [
     playRandomMajorScale,
     playRandomMinorScale,
     playRandomMajorPentatonicScale,
-    playRandomMinorPentatonicScale, 
+    playRandomMinorPentatonicScale,
     playQuasiChromaticScaleRandomFingering
 ];
 
@@ -120,7 +136,7 @@ const getRandomChroma = (): Chroma => {
     return getRandomElementFromArray(ALL_CHROMAS);
 }
 
-// TODO: add common chords.
+// TODO: add common chords (add to existing chord library).
 const chordNames = ["Em", "C", "Am", "G"];
 
 // TODO: replace this with something more structured e.g. common chord progression in random key.

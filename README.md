@@ -47,3 +47,4 @@ npm start
 * Fonts: choose appropriate font in each context.
 * TAB
 * Dark mode. Absolutely lowest priority! :D
+* Organise repo: start by grouping piano and guitar files into subfolders.
