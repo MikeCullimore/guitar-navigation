@@ -1,3 +1,8 @@
+export const getArrayZeroToLengthMinusOne = (length: number): number[] => {
+    // Python wins here!
+    return Array.from(Array(length).keys());
+}
+
 export const getRandomColour = (): string => {
     const letters = "0123456789ABCDEF";
     let colour = "#";

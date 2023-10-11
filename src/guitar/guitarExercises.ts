@@ -4,14 +4,15 @@
 // Source code: https://github.com/sophiekoonin/virtualpiano
 // TODO: add exercise: chord, arpeggio, chord. Rick Beato: https://www.youtube.com/live/19jF6ZwJm-A?si=AoA5QKwu2aZ8qF_W
 // TODO: add exercise: play pitch audio, find it on fretboard. (Extend to melody.)
-// TODO: add exercise: given position, name the note (delay before showing it).
 // TODO: add exercise: all chords in given key.
 // TODO: add exercise: intervals, like https://www.fretjam.com/guitar-intervals-fretboard.html
+// TODO: power chords (just specify root positions).
 
 import { FretboardPosition, NoteMarker } from "./Fretboard";
 import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
-import { getChromaToPositionsLookupForGuitar, standardGuitarTuning } from "./guitarTuning";
-import { ALL_CHROMAS, Chroma } from "../musicTheory";
+import { getChromaToPositionsLookupForGuitar, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
+import { ALL_CHROMAS, Chroma, Note } from "../musicTheory";
+import { getArrayZeroToLengthMinusOne } from "../utils";
 
 const NUM_FRETS = 22; // Strat
 
@@ -61,6 +62,46 @@ export const playRandomChromaAllPositions = (): GuitarExercise => {
         description: `Play every ${chroma}`,
         frames
     };
+}
+
+// TODO: generalise to array of strings (focus on low E and A for chord roots?).
+// TODO: generalise further to any set of positions (e.g. from a key; only inlays).
+// TODO: frame durations as variables here.
+// TODO: shorter frame duration for answer.
+export const identifyNotesOnLowEString = (): GuitarExercise => {
+    // const frets = getArrayZeroToLengthMinusOne(NUM_FRETS + 1);
+    const frets = [3, 5, 7, 9]; // Narrow down to just frets with inlays (below octave!).
+    const string = 6;
+    const positions: FretboardPosition[] = frets.map(fret => {
+        return {
+            string,
+            fret
+        }
+    });
+    const randomisedPositions = randomiseArrayOrder(positions);
+    const openNote = standardGuitarTuning[string - 1];
+    const getNoteAtFret = getFretToNoteLookupForString(openNote, NUM_FRETS);
+    const frames: FrameData[] = randomisedPositions.map(position => {
+        const note = getNoteAtFret(position.fret);
+        const marker: NoteMarker = {
+            fillColour: "blue",
+            ...position
+        };
+        return [
+            {
+                label: "",
+                markers: [marker]
+            },
+            {
+                label: note.chroma,
+                markers: [marker]
+            }
+        ]
+    }).reduce((accumulator, currentValue) => [...accumulator, ...currentValue], []);
+    return {
+        description: `Identify this note`,
+        frames
+    }
 }
 
 // TODO: refactor exercises below to return animation frames, not only description.

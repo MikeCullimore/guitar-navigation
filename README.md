@@ -32,6 +32,11 @@ npm start
         * How to parse rhythms? What formats out there?
         * Refactor to require only diff from previous frame? (React will do this?)
     * Given component A for single frame and interface for props, make generic component to animate A over time.
+* Optimise for desktop, tablet and phone
+    * Responsive web design
+    * CSS media queries
+    * Use `vw` units (viewport width)
+    * On small screens, show only fretboard; on larger ones, keyboard also.
 * Make a standalone script to prototype and debug changes.
     * `nodemon`: see e.g. mermaid diagram compiler script.
 * Static render of all notes on neck with names as labels.

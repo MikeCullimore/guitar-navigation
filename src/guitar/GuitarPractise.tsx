@@ -1,5 +1,5 @@
 import GuitarFretboardAnimation from "./GuitarFretboardAnimation";
-import { getRandomGuitarExercise, playRandomChromaAllPositions } from "./guitarExercises";
+import { getRandomGuitarExercise, identifyNotesOnLowEString, playRandomChromaAllPositions } from "./guitarExercises";
 import { getChromaToPositionsLookupForGuitar, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
 import { Chroma, Note, noteToString } from "../musicTheory";
 import { youOnlyLiveOnce } from "./guitarSongs";
@@ -33,7 +33,8 @@ const GuitarPractise: React.FC<{}> = () => {
     // debugGetFretToNoteLookupForString();
 
     // const exercise = playRandomChromaAllPositions();
-    const exercise = youOnlyLiveOnce;
+    // const exercise = youOnlyLiveOnce;
+    const exercise = identifyNotesOnLowEString();
     
     return (
         // <div className="guitarExercise">{getRandomGuitarExercise()}</div>

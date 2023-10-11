@@ -1,5 +1,6 @@
 import { FretboardPosition } from "./Fretboard";
 import { ALL_CHROMAS, Chroma, Note } from "../musicTheory";
+import { getArrayZeroToLengthMinusOne } from "../utils";
 
 export const standardGuitarTuning: Note[] = [
     {chroma: Chroma.E, octave: 2},
@@ -40,7 +41,7 @@ type ChromaToPosition = (chroma: Chroma) => FretboardPosition[];
 
 export const getChromaToPositionsLookupForGuitar = (openStringNotes: Note[], numFrets: number): ChromaToPosition => {
     const lookupChromaToPositions = new Map<Chroma, FretboardPosition[]>();
-    const frets = Array.from(Array(numFrets + 1).keys()).reverse();
+    const frets = getArrayZeroToLengthMinusOne(numFrets + 1).reverse();
     const numStrings = openStringNotes.length;
     openStringNotes.forEach((openStringNote, index) => {
         const string = numStrings - index;

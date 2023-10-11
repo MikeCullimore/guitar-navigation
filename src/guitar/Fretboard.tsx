@@ -12,25 +12,22 @@
 // TODO: use tooltips to provide extra information on hover?
 // TODO: string not played, mark with an X (chord mode only).
 
+import { getArrayZeroToLengthMinusOne } from "../utils";
+
 // TODO: remove these global variables (pass down from fretboard props).
 const numStrings = 6;
 const numFrets = 22;
 
 const getStringThicknesses = (numStrings: number, minThickness = .1, maxThickness = .35): number[] => {
     const step = 1 / (numStrings - 1);
-    const stringThicknesses = [];
-    
-    for (let string = 0; string < numStrings; string++) {
-        const t = string * step;
-        stringThicknesses.push(maxThickness + (minThickness - maxThickness) * t);
-    }
-    
-    return stringThicknesses;
+    return getArrayZeroToLengthMinusOne(numStrings).map((string) => {
+        return minThickness + (maxThickness - minThickness) * (string * step);
+    });
 }
 
 const stringSizes = getStringThicknesses(numStrings);
 
-const padding = 5;
+const padding = 2;
 const c2 = -0.13827529;
 const c1 = 7.52403813;
 const b = (100 - 2*padding)/100
@@ -44,24 +41,19 @@ export interface FretboardPosition {
 // TODO: is this a component, not an interface? Move over to NoteMarker.tsx.
 export interface NoteMarker extends FretboardPosition {
     fillColour: string;
-    radius?: number; // TODO: how to get in same units as x, y?
     label?: string;
+    radius?: number; // TODO: how to get in same units as x, y?
     strokeColour?: string;
     opacity?: number;
 }
 
 export interface Markers {
-    markers: NoteMarker[]; // TODO: replace with frame data (markers as function of time).
+    markers: NoteMarker[];
 }
 
 export interface FretboardProps extends Markers {
     numStrings: number;
     numFrets: number;
-}
-
-const getArrayOfLength = (length: number): number[] => {
-    // Python wins here!
-    return Array.from(Array(length).keys());
 }
 
 const getFretXPosition = (fret: number): number => {
@@ -79,13 +71,14 @@ const getFretMarkerXPosition = (fret: number): number => {
 // TODO: refactor this to pass in numStrings, numFrets once, return function (string) -> y?
 const getStringYPosition = (string: number): number => {
     const stringSpacing = getFretXPosition(numFrets) - getFretXPosition(numFrets - 1);
-    return padding + stringSpacing*(numStrings - string + 1);
+    // return padding + stringSpacing*(numStrings - string + 1); // String 1 is low E.
+    return padding + stringSpacing*string; // String 1 is high E.
 }
 
 const Frets = (numFrets: number): JSX.Element[] => {
     const y1 = getStringYPosition(1);
     const y2 = getStringYPosition(numStrings);
-    return getArrayOfLength(numFrets + 1).map((_, index) => {
+    return getArrayZeroToLengthMinusOne(numFrets + 1).map((_, index) => {
         const x = getFretXPosition(index)
         return <line key={index} x1={x} y1={y1} x2={x} y2={y2} stroke="gray" strokeWidth={strokeWidth} strokeLinecap="round"/>;
     });
@@ -116,7 +109,7 @@ const Inlays = (): JSX.Element[] => {
 const Strings = (numStrings: number): JSX.Element[] => {
     const x1 = getFretXPosition(0);
     const x2 = getFretXPosition(numFrets);
-    return getArrayOfLength(numStrings).map((_, index) => {
+    return getArrayZeroToLengthMinusOne(numStrings).map((_, index) => {
         const y = getStringYPosition(index + 1);
         return <line key={index} x1={x1} y1={y} x2={x2} y2={y} stroke="LightGray" strokeWidth={stringSizes[index]} strokeLinecap="round"/>
     });

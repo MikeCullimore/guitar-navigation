@@ -33,8 +33,8 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
   const animationFrameIdRef = useRef<FrameRef>(null);
   const startTimeRef = useRef<FrameRef>(null);
 
-  // TODO: interval as prop also.
-  const intervalMilliseconds = 5000;
+  // TODO: interval as prop also. Ultimately a property of each frame.
+  const intervalMilliseconds = 2000;
 
   const scheduleTransition = () => {
     const nextStateIndex = (currentStateIndex + 1) % frames.length;
