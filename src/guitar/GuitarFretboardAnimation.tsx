@@ -10,8 +10,8 @@ export interface GuitarFretboardAnimationProps {
 }
 
 export interface FrameData extends Markers {
-  // millisecondsElapsed: number;
-  label: string; // (Could be note name, chord name...)
+  label: string; // (Could be note name, chord name, scale degree etc.)
+  durationMilliseconds?: number;
 }
 
 // TODO: equivalent function for melodies/arrays of single notes (e.g. scales, arepeggios).
@@ -29,12 +29,14 @@ export const exampleFrames = exampleChords.map(chordName => chordToFrameData(cho
 const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props: GuitarFretboardAnimationProps) => {
   const frames = props.frames;
   const [currentStateIndex, setCurrentStateIndex] = useState(0);
+  const currentFrame = frames[currentStateIndex];
 
   const animationFrameIdRef = useRef<FrameRef>(null);
   const startTimeRef = useRef<FrameRef>(null);
 
   // TODO: interval as prop also. Ultimately a property of each frame.
-  const intervalMilliseconds = 2000;
+  // const intervalMilliseconds = 2000;
+  const intervalMilliseconds = currentFrame.durationMilliseconds ?? 2000;
 
   const scheduleTransition = () => {
     const nextStateIndex = (currentStateIndex + 1) % frames.length;
@@ -45,6 +47,7 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
       }
       const elapsedTime = timestamp - startTimeRef.current!;
 
+      // if (elapsedTime >= intervalMilliseconds) {
       if (elapsedTime >= intervalMilliseconds) {
         setCurrentStateIndex(nextStateIndex);
         startTimeRef.current = null;
@@ -70,7 +73,7 @@ const GuitarFretboardAnimation: React.FC<GuitarFretboardAnimationProps> = (props
     };
   }, [currentStateIndex]);
 
-  const currentFrame = frames[currentStateIndex];
+  // const currentFrame = frames[currentStateIndex];
 
   return (
     <div>

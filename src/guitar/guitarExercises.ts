@@ -66,7 +66,7 @@ export const playRandomChromaAllPositions = (): GuitarExercise => {
 
 export const identifyNotesOnLowEStringInlayFrets = (): GuitarExercise => {
     // const frets = getArrayZeroToLengthMinusOne(NUM_FRETS + 1);
-    const frets = [3, 5, 7, 9, 15, 17, 19, 21]; // Narrow down to just frets with inlays (below octave!).
+    const frets = [3, 5, 7, 9, 12, 15, 17, 19, 21]; // Narrow down to just frets with inlays (below octave!).
     const string = 6;
     const positions: FretboardPosition[] = frets.map(fret => {
         return {
@@ -77,8 +77,6 @@ export const identifyNotesOnLowEStringInlayFrets = (): GuitarExercise => {
     return identifyNotes(positions);
 }
 
-// TODO: frame durations as variables here.
-// TODO: shorter frame duration for answer.
 export const identifyNotes = (positions: FretboardPosition[]): GuitarExercise => {
     const randomisedPositions = randomiseArrayOrder(positions);
     // TODO: store this somewhere and re-use it.
@@ -92,11 +90,13 @@ export const identifyNotes = (positions: FretboardPosition[]): GuitarExercise =>
         return [
             {
                 label: "",
-                markers: [marker]
+                markers: [marker],
+                durationMilliseconds: 2000,
             },
             {
                 label: note.chroma,
-                markers: [marker]
+                markers: [marker],
+                durationMilliseconds: 500,
             }
         ]
     }).reduce((accumulator, currentValue) => [...accumulator, ...currentValue], []);
