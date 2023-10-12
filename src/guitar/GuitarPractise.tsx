@@ -1,15 +1,15 @@
 import GuitarFretboardAnimation from "./GuitarFretboardAnimation";
-import { getRandomGuitarExercise, identifyNotesOnLowEString, playRandomChromaAllPositions } from "./guitarExercises";
-import { getChromaToPositionsLookupForGuitar, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
+import { getRandomGuitarExercise, identifyNotesOnLowEStringInlayFrets, playRandomChromaAllPositions } from "./guitarExercises";
+import { getGuitarPositionLookups, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
 import { Chroma, Note, noteToString } from "../musicTheory";
 import { youOnlyLiveOnce } from "./guitarSongs";
 
 // TODO: make this a unit test.
 const debugGetChromaToPositionsLookupForGuitar = () => {
     const numFrets = 22;
-    const getAllPositionsForChroma = getChromaToPositionsLookupForGuitar(standardGuitarTuning, numFrets);
+    const guitarPositionLookups = getGuitarPositionLookups(standardGuitarTuning, numFrets);
     const chroma = Chroma.E;
-    const positions = getAllPositionsForChroma(chroma);
+    const positions = guitarPositionLookups.getAllPositionsForChroma(chroma);
     const positionsString = positions.map(position => `(${position.string}, ${position.fret})`).join(', ');
     console.log(`Positions for chroma ${chroma}: ${positionsString}`);
 }
@@ -34,7 +34,7 @@ const GuitarPractise: React.FC<{}> = () => {
 
     // const exercise = playRandomChromaAllPositions();
     // const exercise = youOnlyLiveOnce;
-    const exercise = identifyNotesOnLowEString();
+    const exercise = identifyNotesOnLowEStringInlayFrets();
     
     return (
         // <div className="guitarExercise">{getRandomGuitarExercise()}</div>

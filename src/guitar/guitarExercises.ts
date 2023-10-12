@@ -10,9 +10,8 @@
 
 import { FretboardPosition, NoteMarker } from "./Fretboard";
 import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
-import { getChromaToPositionsLookupForGuitar, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
-import { ALL_CHROMAS, Chroma, Note } from "../musicTheory";
-import { getArrayZeroToLengthMinusOne } from "../utils";
+import { getGuitarPositionLookups, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
+import { ALL_CHROMAS, Chroma } from "../musicTheory";
 
 const NUM_FRETS = 22; // Strat
 
@@ -52,10 +51,11 @@ const showAllNotesHighlightCurrent = (positions: FretboardPosition[], currentNot
     });
 }
 
+// TODO: include enharmonic equivalents e.g. C# and Db should both be among options.
 export const playRandomChromaAllPositions = (): GuitarExercise => {
     const chroma = getRandomChroma();
-    const getAllPositionsForChroma = getChromaToPositionsLookupForGuitar(standardGuitarTuning, NUM_FRETS);
-    const positions = getAllPositionsForChroma(chroma);
+    const guitarPositionLookups = getGuitarPositionLookups(standardGuitarTuning, NUM_FRETS);
+    const positions = guitarPositionLookups.getAllPositionsForChroma(chroma);
     const positionsLooped = [...positions.reverse(), ...positions];
     const frames = showAllNotesHighlightCurrent(positionsLooped, "blue", "lightskyblue");
     return {
@@ -64,13 +64,9 @@ export const playRandomChromaAllPositions = (): GuitarExercise => {
     };
 }
 
-// TODO: generalise to array of strings (focus on low E and A for chord roots?).
-// TODO: generalise further to any set of positions (e.g. from a key; only inlays).
-// TODO: frame durations as variables here.
-// TODO: shorter frame duration for answer.
-export const identifyNotesOnLowEString = (): GuitarExercise => {
+export const identifyNotesOnLowEStringInlayFrets = (): GuitarExercise => {
     // const frets = getArrayZeroToLengthMinusOne(NUM_FRETS + 1);
-    const frets = [3, 5, 7, 9]; // Narrow down to just frets with inlays (below octave!).
+    const frets = [3, 5, 7, 9, 15, 17, 19, 21]; // Narrow down to just frets with inlays (below octave!).
     const string = 6;
     const positions: FretboardPosition[] = frets.map(fret => {
         return {
@@ -78,11 +74,17 @@ export const identifyNotesOnLowEString = (): GuitarExercise => {
             fret
         }
     });
+    return identifyNotes(positions);
+}
+
+// TODO: frame durations as variables here.
+// TODO: shorter frame duration for answer.
+export const identifyNotes = (positions: FretboardPosition[]): GuitarExercise => {
     const randomisedPositions = randomiseArrayOrder(positions);
-    const openNote = standardGuitarTuning[string - 1];
-    const getNoteAtFret = getFretToNoteLookupForString(openNote, NUM_FRETS);
+    // TODO: store this somewhere and re-use it.
+    const guitarPositionLookups = getGuitarPositionLookups(standardGuitarTuning, NUM_FRETS);
     const frames: FrameData[] = randomisedPositions.map(position => {
-        const note = getNoteAtFret(position.fret);
+        const note = guitarPositionLookups.getNoteForPosition(position);
         const marker: NoteMarker = {
             fillColour: "blue",
             ...position

@@ -37,18 +37,31 @@ export const getFretToNoteLookupForString = (openNote: Note, numFrets: number): 
     return getNoteAtFret;
 }
 
-type ChromaToPosition = (chroma: Chroma) => FretboardPosition[];
+export interface GuitarPositionLookups {
+    getAllPositionsForChroma: (chroma: Chroma) => FretboardPosition[];
+    getNoteForPosition: (position: FretboardPosition) => Note;
+}
 
-export const getChromaToPositionsLookupForGuitar = (openStringNotes: Note[], numFrets: number): ChromaToPosition => {
+// TODO: change lookup to note not chroma? (I.e. include octave.) Or treat separately?
+export const getGuitarPositionLookups = (openStringNotes: Note[], numFrets: number): GuitarPositionLookups => {
     const lookupChromaToPositions = new Map<Chroma, FretboardPosition[]>();
+    const lookupPositionIdToNote = new Map<number, Note>();
     const frets = getArrayZeroToLengthMinusOne(numFrets + 1).reverse();
     const numStrings = openStringNotes.length;
+    
+    // (Workaround because FretboardPosition as Map key works only if same object instance used.)
+    const getPositionId = (position: FretboardPosition): number => {
+        return position.fret + (position.string - 1)*numFrets;
+    };
+    
     openStringNotes.forEach((openStringNote, index) => {
         const string = numStrings - index;
         const getNoteAtFret = getFretToNoteLookupForString(openStringNote, numFrets);
         frets.forEach((fret) => {
             const newPosition: FretboardPosition = {string, fret};
             const note = getNoteAtFret(fret);
+            const positionId = getPositionId(newPosition);
+            lookupPositionIdToNote.set(positionId, note);
             const existingPositions = lookupChromaToPositions.get(note.chroma);
             if (existingPositions) {
                 existingPositions.push(newPosition);
@@ -58,9 +71,20 @@ export const getChromaToPositionsLookupForGuitar = (openStringNotes: Note[], num
             }
         });
     });
-    const getAllPositionsForChroma: ChromaToPosition = (chroma: Chroma) => {
+    const getAllPositionsForChroma = (chroma: Chroma): FretboardPosition[] => {
         const positions = lookupChromaToPositions.get(chroma);
         return positions || [];
     }
-    return getAllPositionsForChroma;
+    const getNoteForPosition = (position: FretboardPosition): Note => {
+        const positionId = getPositionId(position);
+        const note = lookupPositionIdToNote.get(positionId);
+        if (note === undefined) {
+            throw Error(`No note found for string ${position.string}, fret ${position.fret}.`);
+        }
+        return note;
+    }
+    return {
+        getAllPositionsForChroma,
+        getNoteForPosition
+    };
 }
