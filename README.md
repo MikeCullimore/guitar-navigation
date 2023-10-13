@@ -1,6 +1,27 @@
 # guitar-navigation
 
-Draw dots on the fretboard to help with finding your way around.
+Exercises to help improve your guitar skills (plural: see below!).
+
+I have been trying to learn guitar for a few years and I can play a handful of fragments, but despite my teacher's best efforts (and they are an excellent teacher):
+
+* I have no idea where notes are on the fretboard.
+* I forget even the most essential chords.
+* The only scale I know is minor pentatonic, first position.
+* (...I could go on!)
+
+"Playing guitar" is not one skill, but many! For example:
+
+* Keeping rhythm.
+* Finding notes
+* Fingering chords (quickly!)
+* Recognising chords.
+* Achieving good tone.
+* Playing back something you hear.
+* Playing what you "hear" in your head (your mind's ear?).
+* Recognising intervals.
+* Improvising solos over a chord progression.
+* Conveying emotion.
+* (etc.)
 
 ## How to start the app
 
@@ -12,11 +33,14 @@ npm start
 
 ## TODO
 
+* Essential chords: see notebook.
+* Text labels on note markers.
 * Combine fretboard and keyboard in single component.
     * Reconcile SVG dimensions (currently one works, other doesn't).
 * Exercise generator:
     * Intro page with description of exercise.
     * Loop forever: generate random next exercise.
+    * Re-randomise each exercise when it loops round? (E.g. finding notes: randomise order of notes each time.)
     * Add animation (inputs?) to exercise description.
 * Animate sequence of frames: see GuitarFretboardAnimation.tsx
     * Frame can be chord or individual note.

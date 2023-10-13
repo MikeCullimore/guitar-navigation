@@ -1,12 +1,19 @@
 // TODO: separate files for piano and guitar?
+// TODO: barre chords, root on E and on A.
+// TODO: all chords from Beatles songbook.
+// TODO: all chords from Arctic Monkeys book.
+// TODO: capture common chord types as explained here: https://en.wikipedia.org/wiki/Chord_notation.
+// TODO: CAGED system?
 // TODO: fingering suggestions?
 // TODO: need richer type for barre chords? Or use hyphens?
+// TODO: adapt to ukelele.
 
 import { NoteMarker } from "./guitar/Fretboard";
 import { Chroma } from "./musicTheory";
 
 type Fret = number | null;
 
+// TODO: change input to FretboardPosition i.e. include explicit strings.
 // TODO: add note name, scale degree.
 export const fretsToMarkers = (frets: Fret[]): NoteMarker[] => {
     if (!frets) return [];

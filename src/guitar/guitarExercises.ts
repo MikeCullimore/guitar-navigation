@@ -6,11 +6,12 @@
 // TODO: add exercise: play pitch audio, find it on fretboard. (Extend to melody.)
 // TODO: add exercise: all chords in given key.
 // TODO: add exercise: intervals, like https://www.fretjam.com/guitar-intervals-fretboard.html
+// TODO: add exercise: E minor pentatonic, all positions.
 // TODO: power chords (just specify root positions).
 
 import { FretboardPosition, NoteMarker } from "./Fretboard";
 import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
-import { getGuitarPositionLookups, getFretToNoteLookupForString, standardGuitarTuning } from "./guitarTuning";
+import { getGuitarPositionLookups, standardGuitarTuning } from "./guitarTuning";
 import { ALL_CHROMAS, Chroma } from "../musicTheory";
 
 const NUM_FRETS = 22; // Strat

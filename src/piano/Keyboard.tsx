@@ -25,6 +25,9 @@ const Keyboard: React.FC<KeyboardProps> = (props: KeyboardProps) => {
     const whiteKeyHeight = 100;
     const blackKeyWidth = goldenRatio * whiteKeyWidth;
     const blackKeyHeight = goldenRatio * whiteKeyHeight;
+    
+    // TODO: work these out so that white key widths in gaps between black keys are equal
+    // in (C, D, E) and in (F, G, A, B).
     const offsetA = blackKeyWidth / 6;
     const offsetB = blackKeyWidth / 4;
 
