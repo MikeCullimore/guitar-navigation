@@ -132,12 +132,10 @@ const Notes = (markers: NoteMarker[]): JSX.Element[] => {
 const Fretboard: React.FC<FretboardProps> = (props: FretboardProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            {/* {Frets(props.numFrets)}
+            {Frets(props.numFrets)}
             {Inlays()}
             {Strings(props.numStrings)}
-            {Notes(props.markers)} */}
-            <rect width="200" height="100" fill="red"/>
-            <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="white">Sample Text</text>
+            {Notes(props.markers)}
         </svg>
     );
 }
