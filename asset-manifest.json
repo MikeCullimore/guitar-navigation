@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/guitar-navigation/static/css/main.6998e419.css",
+    "main.js": "/guitar-navigation/static/js/main.42bd7ec2.js",
+    "static/js/787.bcecbfc7.chunk.js": "/guitar-navigation/static/js/787.bcecbfc7.chunk.js",
+    "index.html": "/guitar-navigation/index.html",
+    "main.6998e419.css.map": "/guitar-navigation/static/css/main.6998e419.css.map",
+    "main.42bd7ec2.js.map": "/guitar-navigation/static/js/main.42bd7ec2.js.map",
+    "787.bcecbfc7.chunk.js.map": "/guitar-navigation/static/js/787.bcecbfc7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6998e419.css",
+    "static/js/main.42bd7ec2.js"
+  ]
+}
