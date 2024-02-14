@@ -7,6 +7,8 @@
 // TODO: add exercise: all chords in given key.
 // TODO: add exercise: intervals, like https://www.fretjam.com/guitar-intervals-fretboard.html
 // TODO: add exercise: E minor pentatonic, all positions.
+// TODO: add exercise: twelve bar blues.
+// TODO: add exercise: common chord progressions e.g. C G Am F. See https://www.fretjam.com/three-chord-guitar.html
 // TODO: power chords (just specify root positions).
 
 import { FretboardPosition, NoteMarker } from "./Fretboard";

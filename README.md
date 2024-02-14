@@ -31,6 +31,11 @@ npm start
 
 (See `README-CRA.md` for original readme from create-react-app.)
 
+## Useful links
+
+* [fretjam.com](fretjam.com) is a fantastic site with many resources and structured lessons.
+    * [3 chord progressions](https://www.fretjam.com/three-chord-guitar.html)
+
 ## TODO
 
 * Essential chords: see notebook.
