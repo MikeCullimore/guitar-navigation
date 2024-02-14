@@ -25,11 +25,25 @@ I have been trying to learn guitar for a few years and I can play a handful of f
 
 ## How to start the app
 
-```
+```bash
 npm start
 ```
 
 (See `README-CRA.md` for original readme from create-react-app.)
+
+## How to deploy the app to GitHub pages
+
+Build:
+
+```bash
+npm run build
+```
+
+Deploy:
+
+```bash
+npm run deploy
+```
 
 ## Useful links
 
