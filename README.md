@@ -98,3 +98,15 @@ npm run deploy
 * Dark mode. Absolutely lowest priority! :D
 * Minimise commented code: ripe for bugs!
 * Organise styles (not all in `App.css`): [styled components](https://styled-components.com/)?
+
+### TODO: exercises
+
+Roughly in order of difficulty. Complete each one to unlock the next.
+
+* Identify each string (both ways: which string is this? And which string is e.g. A?).
+* Find given note on given string (prioritise low E string and A: chord roots).
+* Find given note on all strings.
+* Octave shapes (elaborate).
+* Intervals: from given note, find e.g. major third.
+* Scale on given string (many scales! Say note names out loud as you play).
+* Play simple melodies.
