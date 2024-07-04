@@ -52,6 +52,7 @@ npm run deploy
 
 ## TODO
 
+* Configure Storybook, use it to design UI components. 
 * Essential chords: see notebook.
 * Text labels on note markers.
 * Combine fretboard and keyboard in single component.
@@ -101,12 +102,22 @@ npm run deploy
 
 ### TODO: exercises
 
-Roughly in order of difficulty. Complete each one to unlock the next.
-
 * Identify each string (both ways: which string is this? And which string is e.g. A?).
 * Find given note on given string (prioritise low E string and A: chord roots).
 * Find given note on all strings.
+* Power chords.
+* One chord, all positions along the neck.
 * Octave shapes (elaborate).
 * Intervals: from given note, find e.g. major third.
+    * https://www.fretjam.com/guitar-intervals-fretboard.html
 * Scale on given string (many scales! Say note names out loud as you play).
+    * Prioritise minor pentatonic, all positions.
+* Chord, arpeggio, chord. Rick Beato: https://www.youtube.com/live/19jF6ZwJm-A?si=AoA5QKwu2aZ8qF_W
+* Variations of a given chord (dominant, diminished etc.).
+    * See https://virtualpiano.vercel.app/
+    * Source code: https://github.com/sophiekoonin/virtualpiano
+* Play pitch audio, find it on fretboard. (Extend to melody.)
+* Play all chords in given key.
+* Twelve bar blues.
+* Common chord progressions e.g. C G Am F. See https://www.fretjam.com/three-chord-guitar.html
 * Play simple melodies.

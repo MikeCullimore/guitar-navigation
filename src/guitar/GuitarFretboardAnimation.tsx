@@ -14,7 +14,7 @@ export interface FrameData extends Markers {
   durationMilliseconds?: number;
 }
 
-// TODO: equivalent function for melodies/arrays of single notes (e.g. scales, arepeggios).
+// TODO: equivalent function for melodies/arrays of single notes (e.g. scales, arpeggios).
 // TODO: use different colours for different fingerings/voicings.
 export const chordToFrameData = (chordName: string): FrameData => {
   return {

@@ -1,16 +1,3 @@
-// TODO: add exercise: one chord, all positions along the neck.
-// TODO: add exercise: variations of a given chord (dominant, diminished etc.).
-// See https://virtualpiano.vercel.app/
-// Source code: https://github.com/sophiekoonin/virtualpiano
-// TODO: add exercise: chord, arpeggio, chord. Rick Beato: https://www.youtube.com/live/19jF6ZwJm-A?si=AoA5QKwu2aZ8qF_W
-// TODO: add exercise: play pitch audio, find it on fretboard. (Extend to melody.)
-// TODO: add exercise: all chords in given key.
-// TODO: add exercise: intervals, like https://www.fretjam.com/guitar-intervals-fretboard.html
-// TODO: add exercise: E minor pentatonic, all positions.
-// TODO: add exercise: twelve bar blues.
-// TODO: add exercise: common chord progressions e.g. C G Am F. See https://www.fretjam.com/three-chord-guitar.html
-// TODO: power chords (just specify root positions).
-
 import { FretboardPosition, NoteMarker } from "./Fretboard";
 import { FrameData, GuitarFretboardAnimationProps } from "./GuitarFretboardAnimation";
 import { getGuitarPositionLookups, standardGuitarTuning } from "./guitarTuning";
